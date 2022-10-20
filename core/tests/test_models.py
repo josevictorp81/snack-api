@@ -1,7 +1,7 @@
 from django.contrib.auth.models import User
 from django.test import TestCase
 
-from core.models import Classes
+from core.models import Classes, Snack
 
 
 def create_user(username: str, password: str):
@@ -23,3 +23,9 @@ class ModelTests(TestCase):
         c = Classes.objects.create(name='1° serie')
 
         self.assertEqual(c.__str__(), c.name)
+    
+    def test_snack_str(self):
+        """ test str snack """
+        snack = Snack.objects.create(name='refri', price=2.5)
+
+        self.assertEqual(snack.__str__(), 'refri')
