@@ -5,7 +5,7 @@ from django.urls import reverse
 
 CREATE_USER = reverse('create-user')
 CREATE_TOKEN = reverse('token')
-
+ME = reverse('me')
 
 def create_user(**params):
     return get_user_model().objects.create_user(**params)
@@ -88,4 +88,30 @@ class PublicUserApiTest(APITestCase):
         self.assertEqual(res.status_code, status.HTTP_400_BAD_REQUEST)
         self.assertNotIn('access', res.data)
     
+    def test_retrieve_user_unauthorized(self):
+        """ test authentication required for users """
+        res = self.client.get(ME)
+
+        self.assertEqual(res.status_code, status.HTTP_401_UNAUTHORIZED)
+
+class PrivateUserApiTest(APITestCase):
+    def setUp(self) -> None:
+
+        self.client = APIClient()
+        self.user = get_user_model().objects.create_user(username='usertest', password='passwordtest')
+        self.client.force_authenticate(user=self.user)
     
+    def test_retrive_user_profile(self):
+        """ test retrive user profile authenticated """
+
+        res = self.client.get(ME)
+
+        self.assertEqual(res.status_code, status.HTTP_200_OK)
+        self.assertEqual(res.data, {'id': self.user.id, 'username': 'usertest'})
+    
+    def test_post_me_not_allowed(self):
+        """ test post method not allowed """
+
+        res = self.client.post(ME, {})
+
+        self.assertEqual(res.status_code, status.HTTP_405_METHOD_NOT_ALLOWED)
