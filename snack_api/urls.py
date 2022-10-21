@@ -25,4 +25,6 @@ urlpatterns = [
     path('api/user/token/refresh', TokenRefreshView.as_view(), name='token-refresh'),
     # core
     path('api/', include('core.urls')),
+    #child
+    path('api/childs/', include('child.urls')),
 ]
