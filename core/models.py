@@ -22,7 +22,7 @@ def get_classes():
 
 
 class Child(models.Model):
-    code = models.CharField(max_length=4, unique=True)
+    code = models.CharField(max_length=8, unique=True)
     name = models.CharField(max_length=50)
     class_id = models.ForeignKey(Classes, on_delete=models.SET(get_classes))
     father = models.ForeignKey(User, on_delete=models.CASCADE)
