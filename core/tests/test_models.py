@@ -1,7 +1,8 @@
 from django.contrib.auth.models import User
 from django.test import TestCase
+from datetime import date
 
-from core.models import Classes, Snack, Child
+from core.models import Classes, Snack, Child, Order
 
 
 def create_user(username: str, password: str):
@@ -38,3 +39,18 @@ class ModelTests(TestCase):
 
         self.assertEqual(child.__str__(), 'nometest')
     
+    def test_order_str(self):
+        """ test str order """
+        user = create_user(username='usernametest', password='testpassword00')
+        classe = Classes.objects.create(name='classtest')
+        Child.objects.create(name='nometest', code='OIRB', class_id=classe, father=user)
+        snack = Snack.objects.create(name='refri', price=2.5)
+        snack1 = Snack.objects.create(name='suco', price=2.7)
+
+        child = Child.objects.get(father=user.id)
+
+        order = Order.objects.create(order_day='sunday', date=date(2022, 11, 5), child_id=child, order_value=12.25)
+        order.snack_id.add(snack.id, snack1.id)
+
+        self.assertEqual(order.__str__(), 'sunday')
+

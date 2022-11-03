@@ -1,5 +1,9 @@
+from typing import Iterable, Optional
 from django.db import models
 from django.contrib.auth.models import User
+from django.dispatch import receiver
+from django.db.models.signals import post_save
+
 
 class Classes(models.Model):
     name = models.CharField(max_length=30)
@@ -29,4 +33,16 @@ class Child(models.Model):
 
     def __str__(self) -> str:
         return self.name
-    
+
+
+class Order(models.Model):
+    order_day = models.CharField(max_length=15)
+    date = models.DateField()
+    child_id = models.ForeignKey(Child, on_delete=models.CASCADE)
+    snack_id = models.ManyToManyField(Snack)
+    order_value = models.FloatField(blank=True, null=True)
+    created_at = models.DateTimeField(auto_now_add=True)
+
+    def __str__(self) -> str:
+        return self.order_day
+        
