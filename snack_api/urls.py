@@ -27,4 +27,6 @@ urlpatterns = [
     path('api/', include('core.urls')),
     #child
     path('api/childs/', include('child.urls')),
+    #order
+    path('api/order/', include('order.urls')),
 ]
