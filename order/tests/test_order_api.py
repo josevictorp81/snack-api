@@ -8,6 +8,7 @@ from core.models import Order, Snack, Child, Classes
 from order.serializers import OrderSerializer
 
 LIST_ORDER = reverse('list-order')
+CREATE_ORDER = reverse('create-order')
 
 def create_user(username: str = 'usertest', password: str = 'passwordtest'):
     return User.objects.create_user(username=username, password=password)
@@ -57,3 +58,20 @@ class PrivateOderApiTest(APITestCase):
         self.assertEqual(res.status_code, status.HTTP_200_OK)
         self.assertEqual(len(res.data), 1)
         self.assertEqual(res.data, serializer.data)
+    
+    def test_create_order_success(self):
+        """ test create a order successful """
+        snack1 = create_snack(name='juice')
+        snack2 = create_snack(name='apple')
+
+        child = Child.objects.create(code='NHO3UD5G', name='whatever', class_id=create_class(), father=self.user)
+
+        payload = {'order_day': 'qua', 'date': date(2022, 12, 23), 'child_id': child.id, 'snack_id': [snack1.id, snack2.id]}
+
+        res = self.client.post(CREATE_ORDER, payload, format='json')
+
+        order = Order.objects.filter(id=res.data['id'])
+        
+        self.assertEqual(res.status_code, status.HTTP_201_CREATED)
+        self.assertTrue(order.exists())
+        self.assertTrue(res.data['order_value'])

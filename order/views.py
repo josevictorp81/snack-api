@@ -1,4 +1,4 @@
-from rest_framework.generics import ListAPIView
+from rest_framework.generics import ListAPIView, CreateAPIView
 from rest_framework.permissions import IsAuthenticated
 from rest_framework_simplejwt.authentication import JWTAuthentication
 
@@ -15,3 +15,7 @@ class OrderListAPIView(ListAPIView):
     def get_queryset(self):
         return self.queryset.filter(child_id__father=self.request.user)
 
+
+class OrderCreateAPIView(CreateAPIView):
+    serializer_class = OrderSerializer
+    queryset = queryset = Order.objects.all()

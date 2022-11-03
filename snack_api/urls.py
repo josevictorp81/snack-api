@@ -28,5 +28,5 @@ urlpatterns = [
     #child
     path('api/childs/', include('child.urls')),
     #order
-    path('api/order/', include('order.urls')),
+    path('api/orders/', include('order.urls')),
 ]
