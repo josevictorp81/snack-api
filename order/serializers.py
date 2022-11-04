@@ -13,8 +13,8 @@ def calc_order_value(snacks: list) -> float:
 
 
 class OrderSerializer(serializers.ModelSerializer):
-    childs = ChildSerializer(read_only=True)
-    snacks = SnackSerializer(read_only=True)
+    childs = ChildSerializer(many=True, read_only=True)
+    snacks = SnackSerializer(many=True, read_only=True)
 
     class Meta:
         model = Order
@@ -34,4 +34,16 @@ class OrderSerializer(serializers.ModelSerializer):
         self._set_snack_id(snacks=snacks, order=order)
 
         return order
+    
+    def update(self, instance, validated_data):
+        snacks = validated_data.pop('snack_id', None)
+        if snacks is not None:
+            instance.snack_id.clear()
+            self._set_snack_id(snacks=snacks, order=instance)
+        
+        for attr, value in validated_data.items():
+            setattr(instance, attr, value)
+        
+        instance.save()
+        return instance
         

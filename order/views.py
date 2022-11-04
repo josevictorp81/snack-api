@@ -1,4 +1,4 @@
-from rest_framework.generics import ListAPIView, CreateAPIView
+from rest_framework.generics import ListAPIView, CreateAPIView, UpdateAPIView
 from rest_framework.permissions import IsAuthenticated
 from rest_framework_simplejwt.authentication import JWTAuthentication
 
@@ -18,4 +18,13 @@ class OrderListAPIView(ListAPIView):
 
 class OrderCreateAPIView(CreateAPIView):
     serializer_class = OrderSerializer
-    queryset = queryset = Order.objects.all()
+    queryset = Order.objects.all()
+    authentication_classes = [JWTAuthentication]
+    permission_classes = [IsAuthenticated]
+
+
+class OrderUpdateAPIView(UpdateAPIView):
+    serializer_class = OrderSerializer
+    queryset = Order.objects.all()
+    authentication_classes = [JWTAuthentication]
+    permission_classes = [IsAuthenticated]
