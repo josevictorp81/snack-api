@@ -6,7 +6,6 @@ from datetime import date
 
 from core.models import Order, Snack, Child, Classes
 from order.serializers import OrderSerializer
-from child.utils import generate_code
 
 LIST_ORDER = reverse('list-order')
 CREATE_ORDER = reverse('create-order')
@@ -25,6 +24,10 @@ def create_snack(name: str = 'snack1', price: float = 2.56) -> Snack:
 
 def update_url(order_id: int) -> str:
     return reverse('update-order', args=[order_id])
+
+
+def delete_url(order_id: int) -> str:
+    return reverse('delete-order', args=[order_id])
 
 
 class PublicOderApiTest(APITestCase):
@@ -125,7 +128,7 @@ class PrivateOderApiTest(APITestCase):
         payload = {'date': date(2022, 12, 19), 'snack_id': [snack2.id], 'order_day': 'qua', 'child_id': child2.id}
 
         url = update_url(order_id=order.id)
-        res = self.client.patch(url, payload, format='json')
+        res = self.client.put(url, payload, format='json')
 
         order.refresh_from_db()
         self.assertEqual(res.status_code, status.HTTP_200_OK)
@@ -134,3 +137,33 @@ class PrivateOderApiTest(APITestCase):
         self.assertEqual(res.data['child_id'], child2.id)
         self.assertEqual(order.snack_id.count(), 1)
         self.assertEqual(order.snack_id.get(id=snack2.id).id, snack2.id)
+    
+    def test_delete_order_error(self):
+        """ test delete order other user """
+        snack1 = create_snack()
+        user2 = create_user(username='newuser', password='newpassword')
+
+        child1 = Child.objects.create(code='NHELO2I4', name='testname', class_id=create_class(), father=user2)
+
+        order = Order.objects.create(order_day='seg', date=date(2022, 11, 16), child_id=child1)
+        order.snack_id.add(snack1.id)
+
+        url = delete_url(order_id=order.id)
+        res = self.client.delete(url)
+
+        self.assertEqual(res.status_code, status.HTTP_404_NOT_FOUND)
+        self.assertTrue(Order.objects.filter(id=order.id).exists())
+    
+    def test_delete_order(self):
+        """ test delete order """
+        snack1 = create_snack()
+
+        child1 = Child.objects.create(code='NHELO2I4', name='testname', class_id=create_class(), father=self.user)
+
+        order = Order.objects.create(order_day='seg', date=date(2022, 11, 16), child_id=child1)
+        order.snack_id.add(snack1.id)
+
+        url = delete_url(order_id=order.id)
+        res = self.client.delete(url)
+
+        self.assertEqual(res.status_code, status.HTTP_204_NO_CONTENT)

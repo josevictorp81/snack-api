@@ -1,4 +1,4 @@
-from rest_framework.generics import ListAPIView, CreateAPIView, UpdateAPIView
+from rest_framework.generics import ListAPIView, CreateAPIView, UpdateAPIView, DestroyAPIView
 from rest_framework.permissions import IsAuthenticated
 from rest_framework_simplejwt.authentication import JWTAuthentication
 
@@ -28,3 +28,15 @@ class OrderUpdateAPIView(UpdateAPIView):
     queryset = Order.objects.all()
     authentication_classes = [JWTAuthentication]
     permission_classes = [IsAuthenticated]
+
+    def get_queryset(self):
+        return self.queryset.filter(child_id__father=self.request.user)
+
+
+class OrderDeleteAPIView(DestroyAPIView):
+    permission_classes = [IsAuthenticated]
+    authentication_classes = [JWTAuthentication]
+    queryset = Order.objects.all()
+
+    def get_queryset(self):
+        return self.queryset.filter(child_id__father=self.request.user)
