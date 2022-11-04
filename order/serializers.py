@@ -1,6 +1,6 @@
 from rest_framework import serializers
 
-from core.models import Order, Snack
+from core.models import Order, Snack, Child
 from core.serializers import SnackSerializer
 from child.serializers import ChildSerializer
 
@@ -21,19 +21,35 @@ class OrderSerializer(serializers.ModelSerializer):
         fields = ['id', 'order_day', 'date', 'child_id', 'snack_id', 'order_value', 'childs', 'snacks']
         read_only_fields = ['id', 'order_value']
     
-    def _set_snack_id(self, snacks, order):
+    def _set_snack_id(self, snacks, order) -> None:
         for snack in snacks:
             order.snack_id.add(snack)
     
+    def _verify_father(self, child_id: int) -> bool:
+        child = Child.objects.get(id=child_id)
+
+        if child.father == self.context['request'].user:
+            return True
+        return False
+
     def create(self, validated_data):
         snacks = validated_data.pop('snack_id', [])
-        
-        order = Order.objects.create(**validated_data)
-        order.order_value = calc_order_value(snacks)
-        order.save()
-        self._set_snack_id(snacks=snacks, order=order)
+        child_id = validated_data['child_id']
 
-        return order
+        father = self._verify_father(child_id=child_id.id)
+        
+        if father:
+            order = Order.objects.create(**validated_data)
+            order.order_value = calc_order_value(snacks)
+            order.save()
+            self._set_snack_id(snacks=snacks, order=order)
+
+            return order
+        else:
+            msg = {
+                'detail': 'This child are not your son!'
+            }
+            raise serializers.ValidationError(detail=msg)         
     
     def update(self, instance, validated_data):
         snacks = validated_data.pop('snack_id', None)

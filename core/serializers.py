@@ -12,6 +12,6 @@ class ClassesSerializer(serializers.ModelSerializer):
 class SnackSerializer(serializers.ModelSerializer):
     class Meta:
         model = Snack
-        fields = ['name', 'price', 'available']
+        fields = ['id', 'name', 'price', 'available']
         read_only_fields = fields
         

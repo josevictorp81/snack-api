@@ -87,8 +87,11 @@ class PrivateOderApiTest(APITestCase):
     def test_create_order_error(self):
         """ test create order no exists child """
         snack1 = create_snack(name='juice')
+        user2 = create_user(username='newuser', password='newpassword')
 
-        payload = {'order_day': 'qua', 'date': date(2022, 12, 23), 'child_id': 3, 'snack_id': [snack1.id]}
+        child = Child.objects.create(code='NHELO2I4', name='testname', class_id=create_class(), father=user2)
+
+        payload = {'order_day': 'qua', 'date': date(2022, 12, 23), 'child_id': child.id, 'snack_id': [snack1.id]}
 
         res = self.client.post(CREATE_ORDER, payload, format='json')
         
