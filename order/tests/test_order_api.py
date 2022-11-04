@@ -137,6 +137,26 @@ class PrivateOderApiTest(APITestCase):
         self.assertEqual(res.data['child_id'], child2.id)
         self.assertEqual(order.snack_id.count(), 1)
         self.assertEqual(order.snack_id.get(id=snack2.id).id, snack2.id)
+
+    def test_full_update_order(self):
+        """ test full update an order, including exchange child """
+        snack1 = create_snack()
+        snack2 = create_snack(name='suco')
+        user2 = create_user(username='newuser', password='newpassword')
+
+        child1 = Child.objects.create(code='NHELO2I4', name='testname', class_id=create_class(), father=user2)
+        child2 = Child.objects.create(code='NHELO2I7', name='testname1', class_id=create_class(), father=self.user)
+
+        order = Order.objects.create(order_day='seg', date=date(2022, 11, 16), child_id=child1)
+        order.snack_id.add(snack1.id)
+
+        payload = {'date': date(2022, 12, 19), 'snack_id': [snack2.id], 'order_day': 'qua', 'child_id': child2.id}
+
+        url = update_url(order_id=order.id)
+        res = self.client.put(url, payload, format='json')
+        
+        self.assertEqual(res.status_code, status.HTTP_404_NOT_FOUND)
+        self.assertTrue(Order.objects.filter(id=order.id).exists())
     
     def test_delete_order_error(self):
         """ test delete order other user """
