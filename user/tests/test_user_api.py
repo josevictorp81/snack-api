@@ -96,7 +96,6 @@ class PublicUserApiTest(APITestCase):
 
 class PrivateUserApiTest(APITestCase):
     def setUp(self) -> None:
-
         self.client = APIClient()
         self.user = get_user_model().objects.create_user(username='usertest', password='passwordtest')
         self.client.force_authenticate(user=self.user)
