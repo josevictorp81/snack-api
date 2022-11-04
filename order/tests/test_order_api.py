@@ -138,8 +138,8 @@ class PrivateOderApiTest(APITestCase):
         self.assertEqual(order.snack_id.count(), 1)
         self.assertEqual(order.snack_id.get(id=snack2.id).id, snack2.id)
 
-    def test_full_update_order(self):
-        """ test full update an order, including exchange child """
+    def test_update_order_erro(self):
+        """ test update order other user error """
         snack1 = create_snack()
         snack2 = create_snack(name='suco')
         user2 = create_user(username='newuser', password='newpassword')
