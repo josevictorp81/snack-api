@@ -4,7 +4,7 @@ from django.urls import reverse
 from django.contrib.auth.models import User
 
 from core.models import Child, Classes
-from child.serializers import ChildSerializer
+from child.serializers import ChildSerializer, ReadChildSerializer
 from child.utils import generate_code
 
 LIST_CHILD_URL = reverse('list-child')
@@ -42,7 +42,7 @@ class PrivateChildApiTest(APITestCase):
 
         res = self.client.get(LIST_CHILD_URL)
         childs = Child.objects.filter(father=self.user)
-        serializer = ChildSerializer(childs, many=True)
+        serializer = ReadChildSerializer(childs, many=True)
 
         self.assertEqual(res.status_code, status.HTTP_200_OK)
         self.assertEqual(res.data, serializer.data)

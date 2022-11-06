@@ -2,11 +2,11 @@ from rest_framework.generics import ListAPIView, CreateAPIView
 from rest_framework.permissions import IsAuthenticated
 from rest_framework_simplejwt.authentication import JWTAuthentication
 
-from .serializers import ChildSerializer
+from .serializers import ChildSerializer, ReadChildSerializer
 from core.models import Child
 
 class ChildListAPIView(ListAPIView):
-    serializer_class = ChildSerializer
+    serializer_class = ReadChildSerializer
     queryset = Child.objects.all()
     authentication_classes = [JWTAuthentication]
     permission_classes = [IsAuthenticated]
