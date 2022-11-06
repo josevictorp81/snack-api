@@ -36,7 +36,6 @@ class Child(models.Model):
 
 
 class Order(models.Model):
-    order_day = models.CharField(max_length=15)
     date = models.DateField()
     child_id = models.ForeignKey(Child, on_delete=models.CASCADE)
     snack_id = models.ManyToManyField(Snack)
@@ -44,5 +43,5 @@ class Order(models.Model):
     created_at = models.DateTimeField(auto_now_add=True)
 
     def __str__(self) -> str:
-        return self.order_day
+        return f'Order id: {self.id}'
         

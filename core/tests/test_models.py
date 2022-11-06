@@ -49,8 +49,8 @@ class ModelTests(TestCase):
 
         child = Child.objects.get(father=user.id)
 
-        order = Order.objects.create(order_day='sunday', date=date(2022, 11, 5), child_id=child, order_value=12.25)
+        order = Order.objects.create(date=date(2022, 11, 5), child_id=child, order_value=12.25)
         order.snack_id.add(snack.id, snack1.id)
 
-        self.assertEqual(order.__str__(), 'sunday')
+        self.assertEqual(order.__str__(), f'Order id: {order.id}')
 

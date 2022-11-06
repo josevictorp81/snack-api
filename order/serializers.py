@@ -15,7 +15,7 @@ def calc_order_value(snacks: list) -> float:
 class OrderSerializer(serializers.ModelSerializer):
     class Meta:
         model = Order
-        fields = ['id', 'order_day', 'date', 'child_id', 'snack_id', 'order_value']
+        fields = ['id', 'date', 'child_id', 'snack_id', 'order_value']
         read_only_fields = ['id', 'order_value']
     
     def _set_snack_id(self, snacks, order) -> None:
@@ -67,6 +67,6 @@ class ReadOrderSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = Order
-        fields = ['id', 'order_day', 'date', 'child_id', 'snack_id', 'order_value']
+        fields = ['id', 'date', 'child_id', 'snack_id', 'order_value']
         read_only_fields = fields
         

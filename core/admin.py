@@ -19,4 +19,4 @@ class ChildAdmin(admin.ModelAdmin):
 
 @admin.register(Order)
 class OrderAdmin(admin.ModelAdmin):
-    list_display = ['order_day', 'date', 'child_id', 'order_value', 'created_at']
+    list_display = ['date', 'child_id', 'order_value', 'created_at']
