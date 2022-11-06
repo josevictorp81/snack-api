@@ -5,7 +5,7 @@ from django.contrib.auth.models import User
 from datetime import date
 
 from core.models import Order, Snack, Child, Classes
-from order.serializers import OrderSerializer
+from order.serializers import OrderSerializer, ReadOrderSerializer
 
 LIST_ORDER = reverse('list-order')
 CREATE_ORDER = reverse('create-order')
@@ -61,7 +61,7 @@ class PrivateOderApiTest(APITestCase):
 
         res = self.client.get(LIST_ORDER)
         orders = Order.objects.filter(child_id__father=self.user)
-        serializer = OrderSerializer(orders, many=True)
+        serializer = ReadOrderSerializer(orders, many=True)
 
         self.assertEqual(res.status_code, status.HTTP_200_OK)
         self.assertEqual(len(res.data), 1)

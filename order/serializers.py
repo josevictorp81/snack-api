@@ -2,7 +2,7 @@ from rest_framework import serializers
 
 from core.models import Order, Snack, Child
 from core.serializers import SnackSerializer
-from child.serializers import ChildSerializer
+from child.serializers import ReadChildSerializer
 
 def calc_order_value(snacks: list) -> float:
     value = 0
@@ -13,12 +13,9 @@ def calc_order_value(snacks: list) -> float:
 
 
 class OrderSerializer(serializers.ModelSerializer):
-    childs = ChildSerializer(many=True, read_only=True)
-    snacks = SnackSerializer(many=True, read_only=True)
-
     class Meta:
         model = Order
-        fields = ['id', 'order_day', 'date', 'child_id', 'snack_id', 'order_value', 'childs', 'snacks']
+        fields = ['id', 'order_day', 'date', 'child_id', 'snack_id', 'order_value']
         read_only_fields = ['id', 'order_value']
     
     def _set_snack_id(self, snacks, order) -> None:
@@ -62,4 +59,14 @@ class OrderSerializer(serializers.ModelSerializer):
         
         instance.save()
         return instance
+
+
+class ReadOrderSerializer(serializers.ModelSerializer):
+    child_id = ReadChildSerializer()
+    snack_id = SnackSerializer(many=True)
+
+    class Meta:
+        model = Order
+        fields = ['id', 'order_day', 'date', 'child_id', 'snack_id', 'order_value']
+        read_only_fields = fields
         

@@ -3,11 +3,11 @@ from rest_framework.permissions import IsAuthenticated
 from rest_framework_simplejwt.authentication import JWTAuthentication
 
 from core.models import Order
-from .serializers import OrderSerializer
+from .serializers import OrderSerializer, ReadOrderSerializer
 
 
 class OrderListAPIView(ListAPIView):
-    serializer_class = OrderSerializer
+    serializer_class = ReadOrderSerializer
     queryset = Order.objects.all()
     authentication_classes = [JWTAuthentication]
     permission_classes = [IsAuthenticated]
