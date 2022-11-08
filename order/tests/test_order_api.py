@@ -97,6 +97,22 @@ class PrivateOderApiTest(APITestCase):
         
         self.assertEqual(res.status_code, status.HTTP_400_BAD_REQUEST)
     
+    def test_create_order_date_error(self):
+        """ test create order error same date """
+        snack1 = create_snack(name='milk')
+        snack2 = create_snack(name='cake')
+
+        child = Child.objects.create(code='NHELO2I4', name='testname', class_id=create_class(), father=self.user)
+
+        order1 = Order.objects.create(date=date(2022, 11, 16), child_id=child)
+        order1.snack_id.add(snack1.id)
+
+        payload = {'date': date(2022, 11, 16), 'snack_id': [snack2.id]}
+
+        res = self.client.post(CREATE_ORDER, payload, format='json')
+
+        self.assertEqual(res.status_code, status.HTTP_400_BAD_REQUEST)
+    
     def test_partial_update_order(self):
         """ test partial update an order """
         snack1 = create_snack()

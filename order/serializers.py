@@ -28,20 +28,35 @@ class OrderSerializer(serializers.ModelSerializer):
         if child.father == self.context['request'].user:
             return True
         return False
+    
+    def _verify_has_order(self, child_id: int, date) -> bool:
+        order = Order.objects.filter(child_id=child_id, date=date)
+        if order.exists():
+            return True
+        return False
 
     def create(self, validated_data):
         snacks = validated_data.pop('snack_id', [])
         child_id = validated_data['child_id']
+        date = validated_data['date']
 
         father = self._verify_father(child_id=child_id.id)
+
+        has_order = self._verify_has_order(child_id=child_id.id, date=date)
         
         if father:
-            order = Order.objects.create(**validated_data)
-            order.order_value = calc_order_value(snacks)
-            order.save()
-            self._set_snack_id(snacks=snacks, order=order)
+            if not has_order:
+                order = Order.objects.create(**validated_data)
+                order.order_value = calc_order_value(snacks)
+                order.save()
+                self._set_snack_id(snacks=snacks, order=order)
 
-            return order
+                return order
+            else:
+                msg = {
+                'detail': 'You already ordered for that day!'
+            }
+            raise serializers.ValidationError(detail=msg)    
         else:
             msg = {
                 'detail': 'This child are not your son!'
