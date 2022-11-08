@@ -107,7 +107,19 @@ class PrivateOderApiTest(APITestCase):
         order1 = Order.objects.create(date=date(2022, 11, 16), child_id=child)
         order1.snack_id.add(snack1.id)
 
-        payload = {'date': date(2022, 11, 16), 'snack_id': [snack2.id]}
+        payload = {'date': date(2022, 11, 16), 'child_id': child.id, 'snack_id': [snack2.id]}
+
+        res = self.client.post(CREATE_ORDER, payload, format='json')
+
+        self.assertEqual(res.status_code, status.HTTP_400_BAD_REQUEST)
+    
+    def test_create_order_prev_date_error(self):
+        """ test create order error for a prev date """
+        snack1 = create_snack(name='milk')
+
+        child = Child.objects.create(code='NHELO2I4', name='testname', class_id=create_class(), father=self.user)
+
+        payload = {'date': date(2022, 11, 4), 'child_id': child.id, 'snack_id': [snack1.id]}
 
         res = self.client.post(CREATE_ORDER, payload, format='json')
 
@@ -123,7 +135,7 @@ class PrivateOderApiTest(APITestCase):
         order1 = Order.objects.create(date=date(2022, 11, 16), child_id=child1)
         order1.snack_id.add(snack1.id)
 
-        payload = {'date': date(2022, 11, 17), 'snack_id': [snack2.id]}
+        payload = {'date': date(2022, 11, 17), 'snack_id': [snack2.id], 'child_id': child1.id}
 
         url = update_url(order_id=order1.id)
         res = self.client.patch(url, payload, format='json')
