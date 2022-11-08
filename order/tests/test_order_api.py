@@ -98,7 +98,7 @@ class PrivateOderApiTest(APITestCase):
         self.assertEqual(res.status_code, status.HTTP_400_BAD_REQUEST)
     
     def test_create_order_date_error(self):
-        """ test create order error same date """
+        """ test create order same date error """
         snack1 = create_snack(name='milk')
         snack2 = create_snack(name='cake')
 
@@ -114,7 +114,7 @@ class PrivateOderApiTest(APITestCase):
         self.assertEqual(res.status_code, status.HTTP_400_BAD_REQUEST)
     
     def test_create_order_prev_date_error(self):
-        """ test create order error for a prev date """
+        """ test create order for a prev date error """
         snack1 = create_snack(name='milk')
 
         child = Child.objects.create(code='NHELO2I4', name='testname', class_id=create_class(), father=self.user)
@@ -181,13 +181,13 @@ class PrivateOderApiTest(APITestCase):
         order = Order.objects.create(date=date(2022, 11, 16), child_id=child1)
         order.snack_id.add(snack1.id)
 
-        payload = {'date': date(2022, 12, 19), 'snack_id': [snack2.id], 'order_day': 'qua', 'child_id': child2.id}
+        payload = {'date': date(2022, 12, 19), 'snack_id': [snack2.id], 'child_id': child2.id}
 
         url = update_url(order_id=order.id)
         res = self.client.put(url, payload, format='json')
         
         self.assertEqual(res.status_code, status.HTTP_404_NOT_FOUND)
-        self.assertTrue(Order.objects.filter(id=order.id).exists())
+        self.assertEqual(Order.objects.get(id=order.id).child_id.id, child1.id)
     
     def test_delete_order_error(self):
         """ test delete order other user """
