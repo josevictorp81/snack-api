@@ -64,8 +64,8 @@ class PrivateOderApiTest(APITestCase):
         serializer = ReadOrderSerializer(orders, many=True)
 
         self.assertEqual(res.status_code, status.HTTP_200_OK)
-        self.assertEqual(len(res.data), 1)
-        self.assertEqual(res.data, serializer.data)
+        self.assertEqual(len(res.data['results']), 1)
+        self.assertEqual(res.data['results'], serializer.data)
     
     def test_create_order_success(self):
         """ test create a order successful """

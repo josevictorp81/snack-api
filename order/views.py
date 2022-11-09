@@ -4,6 +4,7 @@ from rest_framework_simplejwt.authentication import JWTAuthentication
 
 from core.models import Order
 from .serializers import OrderSerializer, ReadOrderSerializer
+from .pagination import CustomPageNumberPagination
 
 
 class OrderListAPIView(ListAPIView):
@@ -11,6 +12,7 @@ class OrderListAPIView(ListAPIView):
     queryset = Order.objects.all()
     authentication_classes = [JWTAuthentication]
     permission_classes = [IsAuthenticated]
+    pagination_class = CustomPageNumberPagination
 
     def get_queryset(self):
         """ list all order of a child filter by authenticated user/father """
