@@ -13,15 +13,15 @@ class PrivateSnackApiTest(APITestCase):
         self.client.force_authenticate(user=self.user)
     
     def test_list_all_snack(self):
-        """ test list all snacks """
+        """ test list all snacks available true """
         Snack.objects.create(name='snack 1', price=3.29)
-        Snack.objects.create(name='snack 2', price=6.78)
+        Snack.objects.create(name='snack 2', price=6.78, available=False)
 
         res = self.client.get(LIST_SNACK)
-        c = Snack.objects.all().count()
+        c = Snack.objects.filter(available=True).count()
 
         self.assertEqual(res.status_code, status.HTTP_200_OK)
-        self.assertEqual(c, 2)
+        self.assertEqual(c, 1)
     
     def test_post_not_allowed(self):
         """ test post method not allowed """

@@ -17,4 +17,7 @@ class SnackListAPIView(ListAPIView):
     permission_classes = [IsAuthenticated]
     authentication_classes = [JWTAuthentication]
     queryset = Snack.objects.all()
+
+    def get_queryset(self):
+        return self.queryset.filter(available=True)
     
