@@ -14,7 +14,7 @@ class OrderListAPIView(ListAPIView):
 
     def get_queryset(self):
         """ list all order of a child filter by authenticated user/father """
-        return self.queryset.filter(child_id__father=self.request.user)
+        return self.queryset.filter(child_id__father=self.request.user).order_by('-created_at')
 
 
 class OrderCreateAPIView(CreateAPIView):

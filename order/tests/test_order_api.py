@@ -60,7 +60,7 @@ class PrivateOderApiTest(APITestCase):
         order2.snack_id.add(snack1.id, snack2.id)
 
         res = self.client.get(LIST_ORDER)
-        orders = Order.objects.filter(child_id__father=self.user)
+        orders = Order.objects.filter(child_id__father=self.user).order_by('-created_at')
         serializer = ReadOrderSerializer(orders, many=True)
 
         self.assertEqual(res.status_code, status.HTTP_200_OK)
