@@ -3,9 +3,9 @@ from rest_framework import status
 from django.contrib.auth import get_user_model
 from django.urls import reverse
 
-CREATE_USER = reverse('create-user')
-CREATE_TOKEN = reverse('token')
-ME = reverse('me')
+CREATE_USER = reverse('signup-user')
+CREATE_TOKEN = reverse('login-user')
+ME = reverse('profile-user')
 
 def create_user(**params):
     return get_user_model().objects.create_user(**params)
