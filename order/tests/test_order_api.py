@@ -22,6 +22,10 @@ def create_snack(name: str = 'snack1', price: float = 2.56) -> Snack:
     return Snack.objects.create(name=name, price=price)
 
 
+def detail_url(order_id: int) -> str:
+    return reverse('detail-order', args=[order_id])
+
+
 def update_url(order_id: int) -> str:
     return reverse('update-order', args=[order_id])
 
@@ -66,6 +70,24 @@ class PrivateOderApiTest(APITestCase):
         self.assertEqual(res.status_code, status.HTTP_200_OK)
         self.assertEqual(len(res.data['results']), 1)
         self.assertEqual(res.data['results'], serializer.data)
+
+    def test_list_order_by_id(self):
+        """ test list orders by id """
+        snack = create_snack()
+
+        child = Child.objects.create(code='NHEL00MV', name='nametest', class_id=create_class(), father=self.user)
+        
+        order1 = Order.objects.create(date=date(2023, 3, 25), child_id=child)
+        order1.snack_id.add(snack.id)
+
+        url = detail_url(order1.id)
+        res = self.client.get(url)
+        order = Order.objects.filter(id=order1.id, child_id__father=self.user).order_by('-created_at').first()
+        serializer = ReadOrderSerializer(order)
+
+        self.assertEqual(res.status_code, status.HTTP_200_OK)
+        self.assertEqual(res.data, serializer.data)
+
     
     def test_create_order_success(self):
         """ test create a order successful """

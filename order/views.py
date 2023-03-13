@@ -1,4 +1,4 @@
-from rest_framework.generics import ListAPIView, CreateAPIView, UpdateAPIView, DestroyAPIView
+from rest_framework.generics import ListAPIView, CreateAPIView, UpdateAPIView, DestroyAPIView, RetrieveAPIView
 from rest_framework.permissions import IsAuthenticated
 from rest_framework_simplejwt.authentication import JWTAuthentication
 
@@ -17,6 +17,16 @@ class OrderListAPIView(ListAPIView):
     def get_queryset(self):
         """ list all order of a child filter by authenticated user/father """
         return self.queryset.filter(child_id__father=self.request.user).order_by('-created_at')
+
+
+class OrderRetrieveAPIView(RetrieveAPIView):
+    serializer_class = ReadOrderSerializer
+    queryset = Order.objects.all()
+    authentication_classes = [JWTAuthentication]
+    permission_classes = [IsAuthenticated]
+
+    def get_queryset(self):
+        return self.queryset.filter(id=self.kwargs['pk'], child_id__father=self.request.user).order_by('-created_at')
 
 
 class OrderCreateAPIView(CreateAPIView):
