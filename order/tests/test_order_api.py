@@ -80,13 +80,27 @@ class PrivateOderApiTest(APITestCase):
         order1 = Order.objects.create(date=date(2023, 3, 25), child_id=child)
         order1.snack_id.add(snack.id)
 
-        url = detail_url(order1.id)
+        url = detail_url(order_id=order1.id)
         res = self.client.get(url)
-        order = Order.objects.filter(id=order1.id, child_id__father=self.user).order_by('-created_at').first()
-        serializer = ReadOrderSerializer(order)
+        serializer = ReadOrderSerializer(order1)
 
         self.assertEqual(res.status_code, status.HTTP_200_OK)
         self.assertEqual(res.data, serializer.data)
+
+    def test_list_order_by_id_error(self):
+        """ test list orders by id of different user """
+        snack = create_snack()
+        user2 = create_user(username='anotheruser', password='anothertestpass')
+
+        child = Child.objects.create(code='NHEL00MV', name='nametest', class_id=create_class(), father=user2)
+        
+        order1 = Order.objects.create(date=date(2023, 3, 25), child_id=child)
+        order1.snack_id.add(snack.id)
+
+        url = detail_url(order_id=order1.id)
+        res = self.client.get(url)
+
+        self.assertEqual(res.status_code, status.HTTP_404_NOT_FOUND)
 
     
     def test_create_order_success(self):

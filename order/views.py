@@ -26,7 +26,8 @@ class OrderRetrieveAPIView(RetrieveAPIView):
     permission_classes = [IsAuthenticated]
 
     def get_queryset(self):
-        return self.queryset.filter(id=self.kwargs['pk'], child_id__father=self.request.user).order_by('-created_at')
+        """ list all order of a child filter by authenticated user/father """
+        return self.queryset.filter(child_id__father=self.request.user)
 
 
 class OrderCreateAPIView(CreateAPIView):
