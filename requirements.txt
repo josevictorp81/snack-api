@@ -2,4 +2,4 @@ Django==3.2.15
 djangorestframework==3.13.1
 djangorestframework-simplejwt==5.2.0
 psycopg2-binary==2.9.5
-drf-spectacular==0.23.1
+drf-yasg==1.21.5
