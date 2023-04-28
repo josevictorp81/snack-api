@@ -120,7 +120,7 @@ class PrivateOderApiTest(APITestCase):
         child = Child.objects.create(code='NHO3UD5G', name='whatever', class_id=create_class(), father=self.user)
 
         day, month, year = generate_date()
-        payload = {'date': date(year, month, day + 4), 'child_id': child.id, 'snack_id': [snack1.id, snack2.id]}
+        payload = {'date': date(year, month, day + 1), 'child_id': child.id, 'snack_id': [snack1.id, snack2.id]}
 
         res = self.client.post(CREATE_ORDER, payload, format='json')
 
@@ -138,7 +138,7 @@ class PrivateOderApiTest(APITestCase):
         child = Child.objects.create(code='NHELO2I4', name='testname', class_id=create_class(), father=user2)
 
         day, month, year = generate_date()
-        payload = {'date': date(year, month, day + 4), 'child_id': child.id, 'snack_id': [snack1.id]}
+        payload = {'date': date(year, month, day + 1), 'child_id': child.id, 'snack_id': [snack1.id]}
 
         res = self.client.post(CREATE_ORDER, payload, format='json')
         
