@@ -67,3 +67,5 @@ docker-compose down
 
 -   <a href='https://www.djangoproject.com/' target='_blank'>Django</a>
 -   <a href='https://www.django-rest-framework.org/' target='_blank'>Django Rest Framework</a>
+-   <a href='https://docs.docker.com/' target='_blank'>Docker</a>
+-   <a href='https://docs.docker.com/compose/' target='_blank'>Docker Compose</a>
