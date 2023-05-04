@@ -1,0 +1,53 @@
+{% load static %} {% load static %}
+
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8" />
+        <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <script
+            src="https://kit.fontawesome.com/1c27756850.js"
+            crossorigin="anonymous"
+        ></script>
+        <link rel="stylesheet" href="{% static 'css/main.css' %}" />
+        <title>SNACK</title>
+    </head>
+    <body>
+        <div class="container">
+            <div class="sidebar">
+                <header>SNACK</header>
+                <ul>
+                    <li>
+                        <a href="{% url 'order-list-view' %}"
+                            ><i class="fa-solid fa-list"></i>Pedidos</a
+                        >
+                    </li>
+                    <li>
+                        <a href="{% url 'student-list-view' %}"
+                            ><i class="fa-solid fa-graduation-cap"></i>Alunos</a
+                        >
+                    </li>
+                    <li>
+                        <a href="{% url 'snack-list-view' %}"
+                            ><i class="fa-solid fa-burger"></i>Lanches</a
+                        >
+                    </li>
+                    <li>
+                        <a href="{% url 'class-list-view' %}"
+                            ><i class="fa-solid fa-school"></i>Turmas</a
+                        >
+                    </li>
+                    <li>
+                        <a href="#"
+                            ><i class="fa-solid fa-arrow-right-from-bracket"></i
+                            >Sair</a
+                        >
+                    </li>
+                </ul>
+            </div>
+            <!-- <hr /> -->
+            <div class="content">{% block content %} {% endblock%}</div>
+        </div>
+    </body>
+</html>

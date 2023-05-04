@@ -1,0 +1,53 @@
+{% extends 'base.html' %} {% load static %} {% block content %}
+<div class="nav">
+    <h2>Lanches</h2>
+    <button class="btn-new">
+        <a href="./form_lanches.html">Novo Lanche</a>
+    </button>
+</div>
+
+<!-- orders list -->
+<div class="list">
+    <table>
+        <thead>
+            <tr>
+                <th>#</th>
+                <th>Nome</th>
+                <th>Preço</th>
+                <th>Disponível</th>
+                <th>Editar/Deletar</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td>1</td>
+                <td>Suco de laranja</td>
+                <td>2.55</td>
+                <td><i class="fa-solid fa-check"></i></td>
+                <td>
+                    <a href="#"><i class="fa-regular fa-pen-to-square"></i></a>
+                    <a href="#"><i class="fa-sharp fa-solid fa-trash"></i></a>
+                </td>
+            </tr>
+            <tr>
+                <td>2</td>
+                <td>Bolo de laranja</td>
+                <td>2.00</td>
+                <td><i class="fa-solid fa-x"></i></td>
+                <td>
+                    <a href="#"><i class="fa-regular fa-pen-to-square"></i></a>
+                    <a href="#"><i class="fa-sharp fa-solid fa-trash"></i></a>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+</div>
+<!-- end orders list -->
+
+<!-- pagination -->
+<div class="pagination">
+    <a class="bt-pag">Página Anterior</a>
+    <a class="bt-pag">Próxima Página</a>
+</div>
+<!-- end pagination -->
+{% endblock %}

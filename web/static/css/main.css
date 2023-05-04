@@ -1,0 +1,175 @@
+:root {
+    --wihte-color: #fff;
+    --color-gray: #a09f9f;
+    --second-color-gray: #dddddd;
+    --edit-icon: rgb(4, 184, 4);
+    --delete-icon: rgb(255, 0, 0);
+}
+
+* {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    text-decoration: none;
+    box-sizing: border-box;
+    color: #000;
+}
+
+/* CONTAINER */
+.container {
+    display: flex;
+    width: 100%;
+    height: 100vh;
+    background-color: rgb(27, 27, 80);
+}
+
+/* CONTAINER SIDEBAR */
+.sidebar {
+    width: 20%;
+    height: 100%;
+    /* background-color: rgb(27, 27, 80); 042340 */
+}
+
+.sidebar header {
+    font-size: 28px;
+    color: var(--wihte-color);
+    text-align: center;
+    background-color: rgb(45, 45, 124); /*063046*/
+    line-height: 80px;
+    width: 110%;
+    user-select: none;
+}
+
+.sidebar ul a {
+    display: block;
+    height: 100%;
+    width: 100%;
+    font-size: 20px;
+    line-height: 50px;
+    color: var(--wihte-color);
+    text-align: center;
+    border-top: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.sidebar ul a i {
+    margin-right: 15px;
+}
+
+.sidebar ul a .fa-solid {
+    color: var(--wihte-color);
+}
+
+.sidebar ul li:hover a {
+    padding-left: 60px;
+}
+
+/* CONTAINER CONTENT */
+.content {
+    width: 80%;
+    height: 100%;
+    display: flex;
+    gap: 10px;
+    background-color: var(--wihte-color);
+    flex-direction: column;
+    border-bottom-left-radius: 2rem;
+    border-top-left-radius: 2rem;
+    padding: 30px;
+}
+/* CONTENT NAV */
+.nav {
+    /* height: 40px; */
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.btn-new {
+    background-color: rgb(9, 150, 221);
+    border: none;
+    height: 30px;
+    width: 95px;
+    border-radius: 15px;
+    cursor: pointer;
+}
+
+.btn-new:hover {
+    transform: scale(1.1);
+    margin-right: 10px;
+}
+
+/* CONTENT LIST */
+.list table {
+    font-family: arial, sans-serif;
+    border-collapse: collapse;
+    width: 100%;
+    /* padding: 50px; */
+}
+
+.list table thead {
+    background-color: var(--color-gray);
+}
+
+.list table td {
+    width: 20px;
+    max-width: 15px;
+    word-break: break-all;
+}
+
+.list table td,
+th {
+    text-align: center;
+    padding: 4px;
+}
+
+.list table tr:nth-child(even) {
+    background-color: var(--second-color-gray);
+    border: 1px var(--wihte-color);
+}
+
+.fa-regular,
+.fa-check {
+    color: var(--edit-icon);
+}
+
+.fa-x {
+    color: var(--delete-icon);
+}
+
+.fa-regular:hover {
+    transform: scale(1.2);
+}
+
+.fa-sharp {
+    color: var(--delete-icon);
+    margin-left: 10px;
+}
+
+.fa-sharp:hover {
+    transform: scale(1.2);
+}
+
+/* CONTENT PAGINATION */
+.pagination {
+    height: 2rem;
+    display: flex;
+    justify-content: center;
+    gap: 10px;
+    margin-top: auto;
+}
+
+.bt-pag {
+    width: 8rem;
+    height: 100%;
+    border-radius: 8px;
+    background-color: var(--color-gray);
+    font-weight: 600;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.bt-pag:hover {
+    transform: scale(1.1);
+    margin: 0 10px 0 10px;
+}

@@ -1,0 +1,47 @@
+{% extends 'base.html' %} {% load static %} {% block content %}
+<div class="nav">
+    <h2>Turmas</h2>
+    <button class="btn-new">
+        <a href="./form_turma.html">Nova Turma</a>
+    </button>
+</div>
+
+<!-- orders list -->
+<div class="list">
+    <table>
+        <thead>
+            <tr>
+                <th>#</th>
+                <th>Nome</th>
+                <th>Editar/Deletar</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td>1</td>
+                <td>Turma 1</td>
+                <td>
+                    <a href="#"><i class="fa-regular fa-pen-to-square"></i></a>
+                    <a href="#"><i class="fa-sharp fa-solid fa-trash"></i></a>
+                </td>
+            </tr>
+            <tr>
+                <td>2</td>
+                <td>Turma 2</td>
+                <td>
+                    <a href="#"><i class="fa-regular fa-pen-to-square"></i></a>
+                    <a href="#"><i class="fa-sharp fa-solid fa-trash"></i></a>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+</div>
+<!-- end orders list -->
+
+<!-- pagination -->
+<div class="pagination">
+    <a class="bt-pag">Página Anterior</a>
+    <a class="bt-pag">Próxima Página</a>
+</div>
+<!-- end pagination -->
+{% endblock %}
