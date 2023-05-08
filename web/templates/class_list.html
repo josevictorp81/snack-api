@@ -17,31 +17,25 @@
             </tr>
         </thead>
         <tbody>
+            {% for class in class_list %}
             <tr>
-                <td>1</td>
-                <td>Turma 1</td>
+                <td>{{ class.id }}</td>
+                <td>{{ class.name }}</td>
                 <td>
                     <a href="#"><i class="fa-regular fa-pen-to-square"></i></a>
                     <a href="#"><i class="fa-sharp fa-solid fa-trash"></i></a>
                 </td>
             </tr>
-            <tr>
-                <td>2</td>
-                <td>Turma 2</td>
-                <td>
-                    <a href="#"><i class="fa-regular fa-pen-to-square"></i></a>
-                    <a href="#"><i class="fa-sharp fa-solid fa-trash"></i></a>
-                </td>
-            </tr>
+            {% endfor %}
         </tbody>
     </table>
 </div>
 <!-- end orders list -->
 
 <!-- pagination -->
-<div class="pagination">
+<!-- <div class="pagination">
     <a class="bt-pag">Página Anterior</a>
     <a class="bt-pag">Próxima Página</a>
-</div>
+</div> -->
 <!-- end pagination -->
 {% endblock %}

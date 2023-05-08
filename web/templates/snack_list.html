@@ -19,35 +19,33 @@
             </tr>
         </thead>
         <tbody>
+            {% for snack in snack_list %}
             <tr>
-                <td>1</td>
-                <td>Suco de laranja</td>
-                <td>2.55</td>
-                <td><i class="fa-solid fa-check"></i></td>
+                <td>{{ snack.id }}</td>
+                <td>{{ snack.name }}</td>
+                <td>{{ snack.price }}</td>
+                <td>
+                    {% if snack.available %}
+                    <i class="fa-solid fa-check"></i>
+                    {% else %}
+                    <i class="fa-solid fa-x"></i>
+                    {% endif %}
+                </td>
                 <td>
                     <a href="#"><i class="fa-regular fa-pen-to-square"></i></a>
                     <a href="#"><i class="fa-sharp fa-solid fa-trash"></i></a>
                 </td>
             </tr>
-            <tr>
-                <td>2</td>
-                <td>Bolo de laranja</td>
-                <td>2.00</td>
-                <td><i class="fa-solid fa-x"></i></td>
-                <td>
-                    <a href="#"><i class="fa-regular fa-pen-to-square"></i></a>
-                    <a href="#"><i class="fa-sharp fa-solid fa-trash"></i></a>
-                </td>
-            </tr>
+            {% endfor %}
         </tbody>
     </table>
 </div>
 <!-- end orders list -->
 
 <!-- pagination -->
-<div class="pagination">
+<!-- <div class="pagination">
     <a class="bt-pag">Página Anterior</a>
     <a class="bt-pag">Próxima Página</a>
-</div>
+</div> -->
 <!-- end pagination -->
 {% endblock %}
