@@ -1,19 +1,18 @@
-from typing import Any
-from django.http import HttpRequest, HttpResponse
-from django.shortcuts import render
-from django.views.generic import TemplateView, ListView
-from django.contrib.auth.mixins import LoginRequiredMixin
+from django.views.generic import ListView
 # from braces.views import SuperuserRequiredMixin
 
-from core.models import Order, Snack, Classes
+from core.models import Order, Snack, Classes, Child
+
 
 class OrderListView(ListView):
     model = Order
     template_name = 'order_list.html'
 
 
-class StudentListView(TemplateView):
+class StudentListView(ListView):
     template_name = 'student_list.html'
+    context_object_name = 'student_list'
+    model = Child
 
 
 class SnackListView(ListView):
