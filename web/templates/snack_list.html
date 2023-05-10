@@ -43,9 +43,22 @@
 <!-- end orders list -->
 
 <!-- pagination -->
-<!-- <div class="pagination">
-    <a class="bt-pag">Página Anterior</a>
-    <a class="bt-pag">Próxima Página</a>
-</div> -->
+<div class="pagination">
+    {% if page_obj.has_previous %}
+    <a href="?page={{ page_obj.previous_page_number }}" class="bt-pag"
+        >Página Anterior</a
+    >
+    {% endif %}
+
+    <span class="current">
+        Página {{ page_obj.number }} de {{ page_obj.paginator.num_pages }}
+    </span>
+
+    {% if page_obj.has_next %}
+    <a href="?page={{ page_obj.next_page_number }}" class="bt-pag"
+        >Próxima Página</a
+    >
+    {% endif %}
+</div>
 <!-- end pagination -->
 {% endblock %}
