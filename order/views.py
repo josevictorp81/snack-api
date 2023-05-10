@@ -44,7 +44,7 @@ class OrderUpdateAPIView(UpdateAPIView):
     permission_classes = [IsAuthenticated]
 
     def get_queryset(self):
-        """ list all order of a child filter by authenticated user/father """
+        """ get an order of a child filter by authenticated user/father """
         return self.queryset.filter(child_id__father=self.request.user)
 
 
@@ -54,5 +54,5 @@ class OrderDeleteAPIView(DestroyAPIView):
     queryset = Order.objects.all()
 
     def get_queryset(self):
-        """ list all order of a child filter by authenticated user/father """
+        """ delete an order of a child filter by authenticated user/father """
         return self.queryset.filter(child_id__father=self.request.user)

@@ -15,6 +15,7 @@
                 <th>Aluno</th>
                 <th>Série</th>
                 <th>Lanches</th>
+                <th>Preço</th>
                 <th>Data</th>
                 <th>Pai</th>
                 <th>Editar/Deletar</th>
@@ -25,13 +26,18 @@
             <tr>
                 <td>{{ order.id }}</td>
                 <td>{{ order.child_id }}</td>
-                <td>1</td>
-                <td>{{ order.snack_id }}</td>
-                <td>{{ order.date }}</td>
-                <td>{{ order.father }}</td>
+                <td>{{ order.child_id.class_id }}</td>
                 <td>
-                    <a href=""><i class="fa-regular fa-pen-to-square"></i></a>
-                    <a href=""><i class="fa-sharp fa-solid fa-trash"></i></a>
+                    {% for snack in order.snack_id.all %} {{ snack.name }}
+                    <br />
+                    {% endfor %}
+                </td>
+                <td>R$ 5.00</td>
+                <td>{{ order.date|date:'d-m-y'|lower }}</td>
+                <td>{{ order.child_id.father }}</td>
+                <td>
+                    <a href="#"><i class="fa-regular fa-pen-to-square"></i></a>
+                    <a href="#"><i class="fa-sharp fa-solid fa-trash"></i></a>
                 </td>
             </tr>
             {% endfor %}
@@ -42,8 +48,21 @@
 
 <!-- pagination -->
 <div class="pagination">
-    <a class="bt-pag">Página Anterior</a>
-    <a class="bt-pag">Próxima Página</a>
+    {% if page_obj.has_previous %}
+    <a href="?page={{ page_obj.previous_page_number }}" class="bt-pag"
+        >Página Anterior</a
+    >
+    {% endif %}
+
+    <span class="current">
+        Página {{ page_obj.number }} de {{ page_obj.paginator.num_pages }}
+    </span>
+
+    {% if page_obj.has_next %}
+    <a href="?page={{ page_obj.next_page_number }}" class="bt-pag"
+        >Próxima Página</a
+    >
+    {% endif %}
 </div>
 <!-- end pagination -->
 {% endblock %}

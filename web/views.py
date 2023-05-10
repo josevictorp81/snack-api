@@ -6,7 +6,9 @@ from core.models import Order, Snack, Classes, Child
 
 class OrderListView(ListView):
     model = Order
+    context_object_name = 'order_list'
     template_name = 'order_list.html'
+    paginate_by = 15
 
 
 class StudentListView(ListView):
