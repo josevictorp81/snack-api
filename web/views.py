@@ -2,9 +2,11 @@ from typing import Any
 from django.http import HttpRequest, HttpResponse
 from django.shortcuts import redirect, render
 from django.views.generic import ListView, CreateView
+from django.contrib import messages
 # from braces.views import SuperuserRequiredMixin
 
 from core.models import Order, Snack, Classes, Child
+from web.utils import validate_register_class
 
 
 class OrderListView(ListView):
@@ -45,8 +47,13 @@ class ClassCreateView(CreateView):
     def post(self, request: HttpRequest, *args: str, **kwargs: Any) -> HttpResponse:
         class_name = request.POST['name']
 
+        if validate_register_class(request=request, name=class_name):
+            return redirect('create-class')
+
         try:
             self.model.objects.create(name=class_name)
+            messages.add_message(request, messages.SUCCESS,
+                                 'Turma cadastrada com sucesso!')
             return redirect('create-class')
         except:
             print('erro')
