@@ -1,8 +1,5 @@
-from typing import Iterable, Optional
 from django.db import models
 from django.contrib.auth.models import User
-from django.dispatch import receiver
-from django.db.models.signals import post_save
 
 
 class Classes(models.Model):
@@ -44,4 +41,3 @@ class Order(models.Model):
 
     def __str__(self) -> str:
         return f'Order id: {self.id}'
-        

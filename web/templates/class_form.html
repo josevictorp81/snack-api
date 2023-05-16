@@ -1,0 +1,25 @@
+{% extends 'base.html' %} {% load static %} {% block static %}
+<link rel="stylesheet" href="{% static 'css/form_turma.css' %}" />
+{% endblock %} {% block content %}
+<div class="form">
+    <form action="#" method="POST">
+        <div class="title">
+            <h2>Cadastrar Turma</h2>
+        </div>
+        <div class="form-fields">
+            <label for="name" class="label-input">Nome</label>
+            <input
+                type="text"
+                id="name"
+                name="name"
+                class="input-name"
+                placeholder="Ex: Turma 1"
+                required
+            />
+        </div>
+        <div class="form-fields">
+            <button type="submit">Cadastrar</button>
+        </div>
+    </form>
+</div>
+{% endblock %}

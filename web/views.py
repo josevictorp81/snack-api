@@ -1,4 +1,7 @@
-from django.views.generic import ListView
+from typing import Any
+from django.http import HttpRequest, HttpResponse
+from django.shortcuts import render
+from django.views.generic import ListView, CreateView
 # from braces.views import SuperuserRequiredMixin
 
 from core.models import Order, Snack, Classes, Child
@@ -30,3 +33,10 @@ class ClassListView(ListView):
     model = Classes
     template_name = 'class_list.html'
     paginate_by = 25
+
+
+class ClassCreateView(CreateView):
+    template_name = 'class_form.html'
+
+    def get(self, request: HttpRequest, *args: str, **kwargs: Any) -> HttpResponse:
+        return render(request, self.template_name)
