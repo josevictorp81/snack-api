@@ -1,6 +1,6 @@
 from typing import Any
 from django.http import HttpRequest, HttpResponse
-from django.shortcuts import render
+from django.shortcuts import redirect, render
 from django.views.generic import ListView, CreateView
 # from braces.views import SuperuserRequiredMixin
 
@@ -37,6 +37,16 @@ class ClassListView(ListView):
 
 class ClassCreateView(CreateView):
     template_name = 'class_form.html'
+    model = Classes
 
     def get(self, request: HttpRequest, *args: str, **kwargs: Any) -> HttpResponse:
         return render(request, self.template_name)
+
+    def post(self, request: HttpRequest, *args: str, **kwargs: Any) -> HttpResponse:
+        class_name = request.POST['name']
+
+        try:
+            self.model.objects.create(name=class_name)
+            return redirect('create-class')
+        except:
+            print('erro')

@@ -2,7 +2,8 @@
 <link rel="stylesheet" href="{% static 'css/form_turma.css' %}" />
 {% endblock %} {% block content %}
 <div class="form">
-    <form action="#" method="POST">
+    <form action="{% url 'create-class' %}" method="POST">
+        {% csrf_token %}
         <div class="title">
             <h2>Cadastrar Turma</h2>
         </div>
