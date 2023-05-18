@@ -6,7 +6,7 @@ from django.contrib import messages
 # from braces.views import SuperuserRequiredMixin
 
 from core.models import Order, Snack, Classes, Child
-from web.utils import validate_register_class
+from web.utils.classes import ValidateClasses
 
 
 class OrderListView(ListView):
@@ -47,13 +47,15 @@ class ClassCreateView(CreateView):
     def post(self, request: HttpRequest, *args: str, **kwargs: Any) -> HttpResponse:
         class_name = request.POST['name']
 
-        if validate_register_class(request=request, name=class_name):
+        if ValidateClasses(request, class_name).validate_register_class():
             return redirect('create-class')
 
         try:
-            self.model.objects.create(name=class_name)
+            self.model.objects.create(name=class_name.title())
             messages.add_message(request, messages.SUCCESS,
                                  'Turma cadastrada com sucesso!')
             return redirect('create-class')
         except:
-            print('erro')
+            messages.add_message(request, messages.ERROR,
+                                 'Erro interno do sistema!')
+            return redirect('create-class')

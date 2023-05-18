@@ -172,3 +172,32 @@ th {
     transform: scale(1.1);
     margin: 0 10px 0 10px;
 }
+
+.messages {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 3rem;
+    gap: 1rem;
+}
+
+.close {
+    border: 2px solid #000;
+    cursor: pointer;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 1.5rem;
+}
+
+.close:hover {
+    color: rgb(245, 98, 98);
+}
+
+.error {
+    color: rgb(245, 98, 98);
+}
+
+.success {
+    color: rgb(57, 241, 97);
+}
