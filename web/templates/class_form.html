@@ -17,7 +17,7 @@
         </div>
     {% endif %}
 <div class="form">
-    <form action="{% url 'create-class' %}" method="POST">
+    <form {% if class_edit %}action="{% url 'edit-class' class_edit.id %}" {% else %}action="{% url 'create-class' %}"{% endif %} method="POST">
         {% csrf_token %}
         <div class="title">
             <h2>Cadastrar Turma</h2>
@@ -30,6 +30,9 @@
                 name="name"
                 class="input-name"
                 placeholder="Ex: Turma 1"
+                {% if class_edit %}
+                value="{{ class_edit.name }}"
+                {% endif %}
                 required
             />
         </div>

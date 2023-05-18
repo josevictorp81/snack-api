@@ -22,7 +22,9 @@
                 <td>{{ class.id }}</td>
                 <td>{{ class.name }}</td>
                 <td>
-                    <a href="#"><i class="fa-regular fa-pen-to-square"></i></a>
+                    <a href="{% url 'edit-class' class.id %}"
+                        ><i class="fa-regular fa-pen-to-square"></i
+                    ></a>
                     <a href="#"><i class="fa-sharp fa-solid fa-trash"></i></a>
                 </td>
             </tr>

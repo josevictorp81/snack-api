@@ -1,7 +1,8 @@
 from typing import Any
+from django import http
 from django.http import HttpRequest, HttpResponse
 from django.shortcuts import redirect, render
-from django.views.generic import ListView, CreateView
+from django.views.generic import ListView, CreateView, UpdateView
 from django.contrib import messages
 # from braces.views import SuperuserRequiredMixin
 
@@ -54,6 +55,34 @@ class ClassCreateView(CreateView):
             self.model.objects.create(name=class_name.title())
             messages.add_message(request, messages.SUCCESS,
                                  'Turma cadastrada com sucesso!')
+            return redirect('create-class')
+        except:
+            messages.add_message(request, messages.ERROR,
+                                 'Erro interno do sistema!')
+            return redirect('create-class')
+
+
+class ClassUpdateView(UpdateView):
+    model = Classes
+    fields = ['name']
+    template_name = 'class_form.html'
+
+    def get(self, request: HttpRequest, *args: str, **kwargs: Any) -> HttpResponse:
+        class_edit: Classes = self.model.objects.get(id=kwargs['id'])
+
+        context = {
+            'class_edit': class_edit
+        }
+        return render(request, self.template_name, context)
+
+    def post(self, request: HttpRequest, *args: str, **kwargs: Any) -> HttpResponse:
+        class_edit: Classes = self.model.objects.get(id=kwargs['id'])
+
+        try:
+            class_edit.name = self.request.POST['name']
+            class_edit.save()
+            messages.add_message(request, messages.SUCCESS,
+                                 'Turma atualizada com sucesso!')
             return redirect('create-class')
         except:
             messages.add_message(request, messages.ERROR,
