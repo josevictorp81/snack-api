@@ -13,7 +13,7 @@
             <tr>
                 <th>#</th>
                 <th>Nome</th>
-                <th>Editar/Deletar</th>
+                <th>Editar</th>
             </tr>
         </thead>
         <tbody>
@@ -25,7 +25,6 @@
                     <a href="{% url 'edit-class' class.id %}"
                         ><i class="fa-regular fa-pen-to-square"></i
                     ></a>
-                    <a href="#"><i class="fa-sharp fa-solid fa-trash"></i></a>
                 </td>
             </tr>
             {% endfor %}

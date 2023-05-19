@@ -2,7 +2,7 @@
     --wihte-color: #fff;
     --color-gray: #a09f9f;
     --second-color-gray: #dddddd;
-    --edit-icon: rgb(4, 184, 4);
+    --edit-icon: rgb(8, 216, 8);
     --delete-icon: rgb(255, 0, 0);
 }
 
@@ -191,11 +191,11 @@ th {
 }
 
 .close:hover {
-    color: rgb(245, 98, 98);
+    color: var(--delete-icon);
 }
 
 .error {
-    color: rgb(245, 98, 98);
+    color: var(--delete-icon);
 }
 
 .success {

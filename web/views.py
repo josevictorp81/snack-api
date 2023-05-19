@@ -1,9 +1,10 @@
 from typing import Any
-from django import http
+from django.db.models.query import QuerySet
 from django.http import HttpRequest, HttpResponse
 from django.shortcuts import redirect, render
-from django.views.generic import ListView, CreateView, UpdateView
+from django.views.generic import ListView, CreateView, UpdateView, DeleteView
 from django.contrib import messages
+from django.urls import reverse
 # from braces.views import SuperuserRequiredMixin
 
 from core.models import Order, Snack, Classes, Child
@@ -37,6 +38,9 @@ class ClassListView(ListView):
     template_name = 'class_list.html'
     paginate_by = 25
 
+    def get_queryset(self) -> QuerySet[Any]:
+        return self.model.objects.all()
+
 
 class ClassCreateView(CreateView):
     template_name = 'class_form.html'
@@ -68,7 +72,7 @@ class ClassUpdateView(UpdateView):
     template_name = 'class_form.html'
 
     def get(self, request: HttpRequest, *args: str, **kwargs: Any) -> HttpResponse:
-        class_edit: Classes = self.model.objects.get(id=kwargs['id'])
+        class_edit: Classes = self.model.objects.get(id=kwargs['pk'])
 
         context = {
             'class_edit': class_edit
@@ -76,15 +80,20 @@ class ClassUpdateView(UpdateView):
         return render(request, self.template_name, context)
 
     def post(self, request: HttpRequest, *args: str, **kwargs: Any) -> HttpResponse:
-        class_edit: Classes = self.model.objects.get(id=kwargs['id'])
+        class_edit: Classes = self.model.objects.get(id=kwargs['pk'])
 
         try:
             class_edit.name = self.request.POST['name']
             class_edit.save()
             messages.add_message(request, messages.SUCCESS,
                                  'Turma atualizada com sucesso!')
-            return redirect('create-class')
+            return redirect(reverse('edit-class', args=[class_edit.id]))
         except:
             messages.add_message(request, messages.ERROR,
                                  'Erro interno do sistema!')
-            return redirect('create-class')
+            return redirect(reverse('edit-class', args=[class_edit.id]))
+
+
+class ClassDeleteView(DeleteView):
+    model = Classes
+    success_url = '/controller/classes'

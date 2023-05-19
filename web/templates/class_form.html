@@ -1,8 +1,9 @@
 {% extends 'base.html' %} 
 {% load static %} 
 
-{% block static %}
+{% block css %}
 <link rel="stylesheet" href="{% static 'css/form_turma.css' %}" />
+<link rel="stylesheet" href="{% static 'css/delete.css' %}" />
 {% endblock %} 
 
 {% block content %} 
@@ -20,7 +21,11 @@
     <form {% if class_edit %}action="{% url 'edit-class' class_edit.id %}" {% else %}action="{% url 'create-class' %}"{% endif %} method="POST">
         {% csrf_token %}
         <div class="title">
+             {% if class_edit %}
+            <h2>Atualizar Turma</h2>
+            {% else %}
             <h2>Cadastrar Turma</h2>
+            {% endif %}
         </div>
         <div class="form-fields">
             <label for="name" class="label-input">Nome</label>
@@ -37,8 +42,58 @@
             />
         </div>
         <div class="form-fields">
+            {% if class_edit %}
+            <button type="submit">Atualizar</button>
+            {% else %}
             <button type="submit">Cadastrar</button>
+            {% endif %}
         </div>
     </form>
 </div>
+
+{% if class_edit %}
+<div class="delete">
+    <label for="input-delete" class="delete-label">
+        Deletar Pedido
+    </label>
+    <input type="checkbox" id="input-delete" class="delete-input">
+
+    <div class="modal">
+    <div class="delete-modal">
+        <h2 class="modal-title">Deletar Turma</h2>
+        <div class="modal-content">
+            <span class="modal-content__item">
+                <strong>Nome:</strong>
+                {{ class_edit.name }}
+            </span>
+            <span class="modal-content__item">
+                Você tem certeza que deseja deletar esta turma?
+            </span>
+            <div class="modal-buttons">
+                <form action="{% url 'delete-class' class_edit.id %}" method="POST">
+                    {% csrf_token %}
+                    <button
+                        class="button-modal confirm-delete"
+                        type="submit"
+                    >
+                        Sim
+                    </button>
+                    <!-- corrgir o bug para fechar -->
+                    <button
+                        class="button-modal cancel-delete"
+                        type="button"
+                    >
+                        Não
+                    </button>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+</div>
+
+
+
+
+{% endif %}
 {% endblock %}
