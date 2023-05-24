@@ -1,49 +1,38 @@
-.delete {
-    border-radius: 0.5rem;
-    margin: 0 auto;
-    border: 1px solid #000;
-    /* width: 40%; */
+.modal {
+    padding: 1rem 0;
+    display: flex;
+    justify-content: center;
 }
 
-.delete-label {
+.modal-delete__button {
     border-radius: 0.5rem;
-    width: 10rem;
-    height: 4rem;
-    border: none;
-    border: 1px solid var(--delete-icon);
+    width: 8rem;
+    height: 2rem;
+    font-size: 0.9rem;
     cursor: pointer;
     font-weight: bold;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border: 2px solid var(--delete-icon);
 }
 
-.delete-button:hover {
+.modal-delete__button:hover {
     transform: scale(1.1);
+    border: 2px solid var(--delete-icon);
 }
 
-.modal {
-    width: 80vw;
-    height: 100vh;
-    padding: 1rem 2rem;
-    overflow: hidden;
-    position: absolute;
-    top: 0;
-    right: 0;
-    border-top-left-radius: 2rem;
-    border-bottom-left-radius: 2rem;
-    display: none;
-}
-
-.delete-modal {
-    margin: 2rem auto;
+.modal-box {
     width: 40%;
     height: 30vh;
     padding: 1rem 2rem;
     border: 1px solid #a09f9f;
-    background-color: white;
     border-radius: 1rem;
-    overflow: hidden;
     position: absolute;
-    bottom: 18vh;
-    right: 30%;
+    top: 35vh;
+    right: 20vw;
+    display: none;
+    background-color: #fff;
 }
 
 .modal-title {
@@ -61,7 +50,7 @@
     margin-bottom: 1rem;
 }
 
-.button-modal {
+.modal-btn {
     width: 5rem;
     height: 1.5rem;
     border-radius: 1rem;
@@ -71,19 +60,15 @@
     font-size: 0.9rem;
 }
 
-.button-modal:hover {
+.modal-btn:hover {
     transform: scale(1.1);
     margin: 0 10px 0 10px;
 }
 
-.confirm-delete {
+.modal-btn__confirm {
     background-color: var(--edit-icon);
 }
 
-.cancel-delete {
+.modal-btn__cancel {
     background-color: var(--delete-icon);
-}
-
-.delete-input:checked ~ .modal {
-    display: block;
 }

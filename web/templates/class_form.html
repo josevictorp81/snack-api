@@ -1,27 +1,33 @@
-{% extends 'base.html' %} 
-{% load static %} 
-
-{% block css %}
+{% extends 'base.html' %} {% load static %} {% block css %}
 <link rel="stylesheet" href="{% static 'css/form_turma.css' %}" />
-<link rel="stylesheet" href="{% static 'css/delete.css' %}" />
-{% endblock %} 
-
-{% block content %} 
-    {% if messages %}
-        <div class="messages">
-            {% for message in messages %}
-                <span {% if message.tags %} class="{{ message.tags }}" {% endif %}>
-                    {{ message }}
-                </span>
-            {% endfor %}
-            <span class="close">&#x2715</span>
-        </div>
-    {% endif %}
+<link rel="stylesheet" href="{% static 'css/delete_modal.css' %}" />
+{% endblock %} {% block content %} {% if messages %}
+<div class="messages">
+    {% for message in messages %}
+    <span {% if message.tags %} class="{{ message.tags }}" {% endif %}>
+        {{ message }}
+    </span>
+    {% endfor %}
+    <span class="close">&times;</span>
+</div>
+{% endif %}
 <div class="form">
-    <form {% if class_edit %}action="{% url 'edit-class' class_edit.id %}" {% else %}action="{% url 'create-class' %}"{% endif %} method="POST">
+    <form
+        {%
+        if
+        class_edit
+        %}action="{% url 'edit-class' class_edit.id %}"
+        {%
+        else
+        %}action="{% url 'create-class' %}"
+        {%
+        endif
+        %}
+        method="POST"
+    >
         {% csrf_token %}
         <div class="title">
-             {% if class_edit %}
+            {% if class_edit %}
             <h2>Atualizar Turma</h2>
             {% else %}
             <h2>Cadastrar Turma</h2>
@@ -35,9 +41,14 @@
                 name="name"
                 class="input-name"
                 placeholder="Ex: Turma 1"
-                {% if class_edit %}
+                {%
+                if
+                class_edit
+                %}
                 value="{{ class_edit.name }}"
-                {% endif %}
+                {%
+                endif
+                %}
                 required
             />
         </div>
@@ -52,14 +63,17 @@
 </div>
 
 {% if class_edit %}
-<div class="delete">
-    <label for="input-delete" class="delete-label">
-        Deletar Pedido
-    </label>
-    <input type="checkbox" id="input-delete" class="delete-input">
 
-    <div class="modal">
-    <div class="delete-modal">
+<div class="modal">
+    <button
+        type="button"
+        class="modal-delete__button"
+        onclick="deleteModal('open')"
+    >
+        Deletar Turma
+    </button>
+
+    <div class="modal-box">
         <h2 class="modal-title">Deletar Turma</h2>
         <div class="modal-content">
             <span class="modal-content__item">
@@ -69,19 +83,19 @@
             <span class="modal-content__item">
                 Você tem certeza que deseja deletar esta turma?
             </span>
-            <div class="modal-buttons">
-                <form action="{% url 'delete-class' class_edit.id %}" method="POST">
+            <div>
+                <form
+                    action="{% url 'delete-class' class_edit.id %}"
+                    method="POST"
+                >
                     {% csrf_token %}
-                    <button
-                        class="button-modal confirm-delete"
-                        type="submit"
-                    >
+                    <button class="modal-btn modal-btn__confirm" type="submit">
                         Sim
                     </button>
-                    <!-- corrgir o bug para fechar -->
                     <button
-                        class="button-modal cancel-delete"
                         type="button"
+                        onclick="deleteModal('close')"
+                        class="modal-btn modal-btn__cancel"
                     >
                         Não
                     </button>
@@ -90,10 +104,4 @@
         </div>
     </div>
 </div>
-</div>
-
-
-
-
-{% endif %}
-{% endblock %}
+{% endif %} {% endblock %}
