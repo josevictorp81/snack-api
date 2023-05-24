@@ -73,33 +73,38 @@
         Deletar Turma
     </button>
 
-    <div class="modal-box">
-        <h2 class="modal-title">Deletar Turma</h2>
-        <div class="modal-content">
-            <span class="modal-content__item">
-                <strong>Nome:</strong>
-                {{ class_edit.name }}
-            </span>
-            <span class="modal-content__item">
-                Você tem certeza que deseja deletar esta turma?
-            </span>
-            <div>
-                <form
-                    action="{% url 'delete-class' class_edit.id %}"
-                    method="POST"
-                >
-                    {% csrf_token %}
-                    <button class="modal-btn modal-btn__confirm" type="submit">
-                        Sim
-                    </button>
-                    <button
-                        type="button"
-                        onclick="deleteModal('close')"
-                        class="modal-btn modal-btn__cancel"
+    <div class="box">
+        <div class="modal-box">
+            <h2 class="modal-title">Deletar Turma</h2>
+            <div class="modal-content">
+                <span class="modal-content__item">
+                    <strong>Nome:</strong>
+                    {{ class_edit.name }}
+                </span>
+                <span class="modal-content__item">
+                    Você tem certeza que deseja deletar esta turma?
+                </span>
+                <div>
+                    <form
+                        action="{% url 'delete-class' class_edit.id %}"
+                        method="POST"
                     >
-                        Não
-                    </button>
-                </form>
+                        {% csrf_token %}
+                        <button
+                            class="modal-btn modal-btn__confirm"
+                            type="submit"
+                        >
+                            Sim
+                        </button>
+                        <button
+                            type="button"
+                            onclick="deleteModal('close')"
+                            class="modal-btn modal-btn__cancel"
+                        >
+                            Não
+                        </button>
+                    </form>
+                </div>
             </div>
         </div>
     </div>

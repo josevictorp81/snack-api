@@ -8,10 +8,10 @@ closeButton.addEventListener('click', () => {
 
 function deleteModal(state) {
     if (state === 'open') {
-        document.querySelector('.modal-box').style.display = 'block'
+        document.querySelector('.box').style.display = 'block'
         console.log('abriu')
     } else {
-        document.querySelector('.modal-box').style.display = 'none'
+        document.querySelector('.box').style.display = 'none'
         console.log('fechou')
     }
 }

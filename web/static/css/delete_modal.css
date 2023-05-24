@@ -4,6 +4,17 @@
     justify-content: center;
 }
 
+.box {
+    width: 80vw;
+    height: 100vh;
+    display: none;
+    position: absolute;
+    top: 0;
+    right: 0;
+    border-top-left-radius: 2rem;
+    border-bottom-left-radius: 2rem;
+}
+
 .modal-delete__button {
     border-radius: 0.5rem;
     width: 8rem;
@@ -30,9 +41,9 @@
     border-radius: 1rem;
     position: absolute;
     top: 35vh;
-    right: 20vw;
-    display: none;
+    right: 24vw;
     background-color: #fff;
+    text-align: center;
 }
 
 .modal-title {
