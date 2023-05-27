@@ -1,10 +1,22 @@
 {% extends 'base.html' %} {% load static %} {% block content %}
+
 <div class="nav">
     <h2>Turmas</h2>
-    <button class="btn-new">
-        <a href="{% url 'create-class' %}">Nova Turma</a>
-    </button>
+    <a href="{% url 'create-class' %}">
+        <button class="btn-new">Nova Turma</button>
+    </a>
 </div>
+
+{% if messages %}
+<div class="messages">
+    {% for message in messages %}
+    <span {% if message.tags %} class="{{ message.tags }}" {% endif %}>
+        {{ message }}
+    </span>
+    {% endfor %}
+    <span class="close"><i class="fa-solid fa-xmark"></i></span>
+</div>
+{% endif %}
 
 <!-- orders list -->
 <div class="list">

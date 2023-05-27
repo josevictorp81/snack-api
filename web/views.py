@@ -96,3 +96,8 @@ class ClassUpdateView(UpdateView):
 class ClassDeleteView(DeleteView):
     model = Classes
     success_url = '/controller/classes'
+
+    def delete(self, request: HttpRequest, *args: str, **kwargs: Any) -> HttpResponse:
+        messages.add_message(request, messages.SUCCESS,
+                             'Turma excluída com sucesso!')
+        return super().delete(request, *args, **kwargs)
