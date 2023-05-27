@@ -59,7 +59,7 @@ class ClassCreateView(CreateView):
             self.model.objects.create(name=class_name.title())
             messages.add_message(request, messages.SUCCESS,
                                  'Turma cadastrada com sucesso!')
-            return redirect('create-class')
+            return redirect('class-list-view')
         except:
             messages.add_message(request, messages.ERROR,
                                  'Erro interno do sistema!')
@@ -68,7 +68,6 @@ class ClassCreateView(CreateView):
 
 class ClassUpdateView(UpdateView):
     model = Classes
-    fields = ['name']
     template_name = 'class_form.html'
 
     def get(self, request: HttpRequest, *args: str, **kwargs: Any) -> HttpResponse:
