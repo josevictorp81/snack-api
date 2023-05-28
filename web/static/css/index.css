@@ -103,6 +103,7 @@
     font-family: arial, sans-serif;
     border-collapse: collapse;
     width: 100%;
+    table-layout: fixed;
     /* padding: 50px; */
 }
 
@@ -112,6 +113,7 @@
 
 .list table td {
     word-break: break-all;
+    width: auto;
 }
 
 .list table td,
@@ -185,32 +187,57 @@ th {
     background-color: rgba(0, 100, 255, 0.9);
     gap: 1rem;
     position: absolute;
-    top: 4.5rem;
+    top: 4.8rem;
     right: 2rem;
     border-radius: 0.7rem;
+    border-top-right-radius: 0;
     box-shadow: 0 5px 10px rgba(0, 0, 0, 0.1);
 }
 
-.close {
-    background-color: rgb(211, 209, 209);
-    cursor: pointer;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    width: 3rem;
-    height: 3rem;
-    border-radius: 0.7rem;
-}
-
-.close:hover .fa-xmark {
-    color: rgb(245, 98, 98);
-}
-
 .error {
-    color: rgb(245, 98, 98);
+    color: rgb(255, 0, 0);
 }
 
 .success {
-    /* color: rgb(57, 241, 97); */
-    color: white;
+    color: rgb(255, 255, 255);
 }
+
+/* MESSAGES */
+/* .messages { */
+/* display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 5rem;
+    width: 15rem;
+    padding: 1rem; */
+/* background-color: rgba(0, 100, 255, 0.9); */
+/* position: absolute; */
+/* top: 4.7rem; */
+/* right: 2rem; */
+/* border-radius: 0.7rem; */
+/* box-shadow: 0 5px 10px rgba(0, 0, 0, 0.1); */
+/* } */
+
+/* .error {
+    color: rgb(255, 255, 255);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 5rem;
+    width: 15rem;
+    padding: 1rem;
+    background-color: rgba(255, 40, 40, 0.9);
+    box-shadow: 0 5px 10px rgba(0, 0, 0, 0.1);
+} */
+
+/* .success {
+    color: rgb(255, 255, 255);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 5rem;
+    width: 15rem;
+    padding: 1rem;
+    background-color: rgba(0, 255, 0, 0.9);
+    box-shadow: 0 5px 10px rgba(0, 0, 0, 0.1);
+} */
