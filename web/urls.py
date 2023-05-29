@@ -1,16 +1,16 @@
 from django.urls import path
 
-from . import views
+from .views import classes, orders, students, snacks
 
 urlpatterns = [
-    path('orders', views.OrderListView.as_view(), name='order-list-view'),
-    path('students', views.StudentListView.as_view(), name='student-list-view'),
-    path('snacks', views.SnackListView.as_view(), name='snack-list-view'),
+    path('orders', orders.OrderListView.as_view(), name='order-list-view'),
+    path('students', students.StudentListView.as_view(), name='student-list-view'),
+    path('snacks', snacks.SnackListView.as_view(), name='snack-list-view'),
     # classes
-    path('classes', views.ClassListView.as_view(), name='class-list-view'),
-    path('classes/create', views.ClassCreateView.as_view(), name='create-class'),
+    path('classes', classes.ClassListView.as_view(), name='class-list-view'),
+    path('classes/create', classes.ClassCreateView.as_view(), name='create-class'),
     path('classes/<int:pk>/update',
-         views.ClassUpdateView.as_view(), name='edit-class'),
+         classes.ClassUpdateView.as_view(), name='edit-class'),
     path('classes/<int:pk>/delete',
-         views.ClassDeleteView.as_view(), name='delete-class'),
+         classes.ClassDeleteView.as_view(), name='delete-class'),
 ]

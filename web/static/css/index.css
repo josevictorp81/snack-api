@@ -113,7 +113,7 @@
 
 .list table td {
     word-break: break-all;
-    width: auto;
+    /* width: auto; */
 }
 
 .list table td,
@@ -187,7 +187,7 @@ th {
     background-color: rgba(0, 100, 255, 0.9);
     gap: 1rem;
     position: absolute;
-    top: 4.8rem;
+    top: 5rem;
     right: 2rem;
     border-radius: 0.7rem;
     border-top-right-radius: 0;

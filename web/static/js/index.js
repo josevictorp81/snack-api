@@ -2,8 +2,8 @@
 function closeMessagesAuto() {
     setTimeout(() => {
         document.querySelector('.messages').style.display = 'none'
-        // document.querySelector('.messages').style.transition = '2s'
-        // document.querySelector('.messages').style.transitionProperty = 'display'
+        document.querySelector('.messages').style.transition = '2s'
+        document.querySelector('.messages').style.transitionProperty = 'display'
     }, 3000)
 }
 
