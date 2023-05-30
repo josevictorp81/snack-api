@@ -1,50 +1,52 @@
-{% extends 'base.html' %} {% load static %} {% block css %}
-<link rel="stylesheet" href="{% static 'css/form_class.css' %}" />
+{% extends 'base.html' %} {% load static %}{% block css %}
+<link rel="stylesheet" href="{% static 'css/form_snack.css' %}" />
 <link rel="stylesheet" href="{% static 'css/delete_modal.css' %}" />
 {% endblock %} {% block content %}
 
 <div class="form">
-    {% if class_edit %}
-    <form action="{% url 'edit-class' class_edit.id %}" method="POST">
-    {% else %}
-    <form action="{% url 'create-class' %}" method="POST">
-    {% endif %}
+    <form action="{% url 'create-snack' %}" method="POST">
         {% csrf_token %}
         <div class="title">
-            {% if class_edit %}
-            <h2>Atualizar Turma</h2>
-            {% else %}
-            <h2>Cadastrar Turma</h2>
-            {% endif %}
+            <h2>Cadastrar Lanche</h2>
         </div>
         <div class="form-fields">
             <label for="name" class="label-input">Nome</label>
-            {% if class_edit %}
             <input
                 type="text"
                 id="name"
                 name="name"
                 class="input-name"
-                value="{{ class_edit.name }}"
+                placeholder="Ex: Suco..."
                 required
             />
-            {% else %}
+
+            <label for="price" class="label-input">Preço</label>
             <input
-                type="text"
-                id="name"
-                name="name"
-                class="input-name"
-                placeholder="Ex: Turma 1"
+                type="number"
+                min="0"
+                max="100"
+                step="0.01"
+                id="price"
+                name="price"
+                class="input-price"
+                placeholder="R$ 0.0"
                 required
             />
-            {% endif %}
+
+            <label for="available" class="label-input">Status</label>
+            <select
+                name="available"
+                id="available"
+                class="input-select"
+                required
+            >
+                <option value="">Escolha</option>
+                <option value="true">Disponível</option>
+                <option value="false">Não Disponível</option>
+            </select>
         </div>
         <div class="form-fields">
-            {% if class_edit %}
-            <button type="submit">Atualizar</button>
-            {% else %}
             <button type="submit">Cadastrar</button>
-            {% endif %}
         </div>
     </form>
 </div>
@@ -58,9 +60,7 @@
     {% endfor %}
 </div>
 {% endif %}
-
-{% if class_edit %}
-
+<!-- {% if class_edit %}
 <div class="modal">
     <button
         type="button"
@@ -106,4 +106,5 @@
         </div>
     </div>
 </div>
-{% endif %} {% endblock %}
+{% endif %}  -->
+{% endblock %}

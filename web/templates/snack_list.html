@@ -1,10 +1,20 @@
 {% extends 'base.html' %} {% load static %} {% block content %}
 <div class="nav">
     <h2>Lanches</h2>
-    <button class="btn-new">
-        <a href="./form_lanches.html">Novo Lanche</a>
-    </button>
+    <a href="{% url 'create-snack' %}"
+        ><button class="btn-new">Novo Lanche</button>
+    </a>
 </div>
+
+{% if messages %}
+<div class="messages">
+    {% for message in messages %}
+    <span {% if message.tags %} class="{{ message.tags }}" {% endif %}>
+        {{ message }}
+    </span>
+    {% endfor %}
+</div>
+{% endif %}
 
 <!-- orders list -->
 <div class="list">
@@ -33,7 +43,6 @@
                 </td>
                 <td>
                     <a href="#"><i class="fa-regular fa-pen-to-square"></i></a>
-                    <a href="#"><i class="fa-sharp fa-solid fa-trash"></i></a>
                 </td>
             </tr>
             {% endfor %}
