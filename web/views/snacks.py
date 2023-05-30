@@ -1,8 +1,8 @@
-from pyexpat.errors import messages
 from typing import Any
 from django.http import HttpRequest, HttpResponse
 from django.shortcuts import render, redirect
 from django.views.generic import ListView, CreateView
+from django.contrib import messages
 # from braces.views import SuperuserRequiredMixin
 
 from core.models import Snack
@@ -28,18 +28,18 @@ class SnackCreateView(CreateView):
         price: float = float(request.POST['price'])
         status: str = request.POST['available']
 
-        if ValidateSnacks(request, name).validate_name():
+        if ValidateSnacks(request, name=name).validate_name():
             return redirect('create-snack')
-        # if ValidateSnacks(request, price).validate_price():
-        #     return redirect('create-snack')
+        if ValidateSnacks(request, price=price).validate_price():
+            return redirect('create-snack')
 
         available: bool = True if status == 'true' else False
 
         try:
             self.model.objects.create(
                 name=name.title(), price=price, available=available)
-            # messages.add_message(request, messages.SUCCESS,
-            #                      'Lanche cadastrado com sucesso!')
+            messages.add_message(request, messages.SUCCESS,
+                                 'Lanche cadastrado com sucesso!')
             return redirect('snack-list-view')
         except:
             messages.add_message(request, messages.ERROR,
