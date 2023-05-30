@@ -21,12 +21,13 @@ class ValidateSnacks:
                                  'Falha no cadastro! Nome inválido!')
             return True
 
+        return False
+
+    def validate_name_exists(self) -> bool:
         if Snack.objects.filter(name=self.name.title()).exists():
             messages.add_message(self.request, messages.ERROR,
                                  'Falha no cadastro! Lanche com este nome já existe!')
             return True
-
-        return False
 
     def validate_price(self) -> bool:
         if self.price < 0:

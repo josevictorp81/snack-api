@@ -4,12 +4,64 @@
 {% endblock %} {% block content %}
 
 <div class="form">
+    {% if snack_edit %}
+    <form action="{% url 'edit-snack' snack_edit.id %}" method="POST">
+    {% else %}
     <form action="{% url 'create-snack' %}" method="POST">
+    {% endif %}
         {% csrf_token %}
         <div class="title">
+            {% if snack_edit %}
+            <h2>Atualizar Lanche</h2>
+            {% else %}
             <h2>Cadastrar Lanche</h2>
+            {% endif %}
         </div>
         <div class="form-fields">
+            {% if snack_edit %}
+            <label for="name" class="label-input">Nome</label>
+            <input
+                type="text"
+                id="name"
+                name="name"
+                class="input-name"
+                placeholder="Ex: Suco..."
+                value="{{ snack_edit.name }}"
+                required
+            />
+
+            <label for="price" class="label-input">Preço</label>
+            <input
+                type="number"
+                min="0"
+                max="100"
+                step="0.1"
+                id="price"
+                name="price"
+                class="input-price"
+                placeholder="R$ 0.0"
+                value="{{ snack_edit.price }}"
+                required
+            />
+
+            <label for="available" class="label-input">Status</label>
+            <select
+                name="available"
+                id="available"
+                class="input-select"
+                required
+            >   
+                {% if snack_edit.available %}
+                <option value="">Escolha</option>
+                <option selected value="true">Disponível</option>
+                <option value="false">Não Disponível</option>
+                {% else %}
+                <option value="">Escolha</option>
+                <option value="true">Disponível</option>
+                <option selected value="false">Não Disponível</option>
+                {% endif %}
+            </select>
+            {% else %}
             <label for="name" class="label-input">Nome</label>
             <input
                 type="text"
@@ -44,6 +96,7 @@
                 <option value="true">Disponível</option>
                 <option value="false">Não Disponível</option>
             </select>
+            {% endif %}
         </div>
         <div class="form-fields">
             <button type="submit">Cadastrar</button>

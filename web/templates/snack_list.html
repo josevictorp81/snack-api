@@ -42,7 +42,9 @@
                     {% endif %}
                 </td>
                 <td>
-                    <a href="#"><i class="fa-regular fa-pen-to-square"></i></a>
+                    <a href="{% url 'edit-snack' snack.id %}"
+                        ><i class="fa-regular fa-pen-to-square"></i
+                    ></a>
                 </td>
             </tr>
             {% endfor %}

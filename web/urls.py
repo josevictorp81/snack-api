@@ -8,6 +8,8 @@ urlpatterns = [
     # snacks
     path('snacks', snacks.SnackListView.as_view(), name='snack-list-view'),
     path('snacks/create', snacks.SnackCreateView.as_view(), name='create-snack'),
+    path('snacks/<int:pk>/update',
+         snacks.SnackUpdateView.as_view(), name='edit-snack'),
 
     # classes
     path('classes', classes.ClassListView.as_view(), name='class-list-view'),
