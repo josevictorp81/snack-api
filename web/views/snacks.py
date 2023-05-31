@@ -1,7 +1,7 @@
 from typing import Any
 from django.http import HttpRequest, HttpResponse
 from django.shortcuts import render, redirect
-from django.views.generic import ListView, CreateView, UpdateView
+from django.views.generic import ListView, CreateView, UpdateView, DeleteView
 from django.contrib import messages
 from django.urls import reverse
 # from braces.views import SuperuserRequiredMixin
@@ -87,3 +87,13 @@ class SnackUpdateView(UpdateView):
             messages.add_message(request, messages.ERROR,
                                  'Erro interno do sistema!')
             return redirect('edit-snack')
+
+
+class SnackDeleteView(DeleteView):
+    model = Snack
+    success_url = '/controller/snacks'
+
+    def delete(self, request: HttpRequest, *args: str, **kwargs: Any) -> HttpResponse:
+        messages.add_message(request, messages.SUCCESS,
+                             'Lanche excluído com sucesso!')
+        return super().delete(request, *args, **kwargs)

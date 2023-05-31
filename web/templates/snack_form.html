@@ -113,30 +113,42 @@
     {% endfor %}
 </div>
 {% endif %}
-<!-- {% if class_edit %}
+{% if snack_edit %}
 <div class="modal">
     <button
         type="button"
         class="modal-delete__button"
         onclick="deleteModal('open')"
     >
-        Deletar Turma
+        Deletar Lanche
     </button>
 
     <div class="box">
         <div class="modal-box">
-            <h2 class="modal-title">Deletar Turma</h2>
+            <h2 class="modal-title">Deletar Lanche</h2>
             <div class="modal-content">
                 <span class="modal-content__item">
                     <strong>Nome:</strong>
-                    {{ class_edit.name }}
+                    {{ snack_edit.name }}
                 </span>
                 <span class="modal-content__item">
-                    Você tem certeza que deseja deletar esta turma?
+                    <strong>Preço:</strong>
+                    {{ snack_edit.price }}
+                </span>
+                <span class="modal-content__item">
+                    <strong>Preço:</strong>
+                    {% if snack_edit.available %}
+                    Disponível
+                    {% else %}
+                    Não Disponível
+                    {% endif %}
+                </span>
+                <span class="modal-content__item">
+                    Você tem certeza que deseja deletar este lanche?
                 </span>
                 <div>
                     <form
-                        action="{% url 'delete-class' class_edit.id %}"
+                        action="{% url 'delete-snack' snack_edit.id %}"
                         method="POST"
                     >
                         {% csrf_token %}
@@ -159,5 +171,5 @@
         </div>
     </div>
 </div>
-{% endif %}  -->
+{% endif %} 
 {% endblock %}
