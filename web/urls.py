@@ -4,7 +4,11 @@ from .views import classes, orders, students, snacks
 
 urlpatterns = [
     path('orders', orders.OrderListView.as_view(), name='order-list-view'),
+    # students
     path('students', students.StudentListView.as_view(), name='student-list-view'),
+    path('students/create', students.StudentCreateView.as_view(),
+         name='create-student'),
+
     # snacks
     path('snacks', snacks.SnackListView.as_view(), name='snack-list-view'),
     path('snacks/create', snacks.SnackCreateView.as_view(), name='create-snack'),

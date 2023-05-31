@@ -2,9 +2,19 @@
 <div class="nav">
     <h2>Alunos</h2>
     <button class="btn-new">
-        <a href="./form_alunos.html">Novo Aluno</a>
+        <a href="{% url 'create-student' %}">Novo Aluno</a>
     </button>
 </div>
+
+{% if messages %}
+<div class="messages">
+    {% for message in messages %}
+    <span {% if message.tags %} class="{{ message.tags }}" {% endif %}>
+        {{ message }}
+    </span>
+    {% endfor %}
+</div>
+{% endif %}
 
 <!-- orders list -->
 <div class="list">
@@ -27,7 +37,6 @@
                 <td>{{ student.father }}</td>
                 <td>
                     <a href="#"><i class="fa-regular fa-pen-to-square"></i></a>
-                    <a href="#"><i class="fa-sharp fa-solid fa-trash"></i></a>
                 </td>
             </tr>
             {% endfor %}
