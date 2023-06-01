@@ -36,7 +36,9 @@
                 <td>{{ student.class_id }}</td>
                 <td>{{ student.father }}</td>
                 <td>
-                    <a href="#"><i class="fa-regular fa-pen-to-square"></i></a>
+                    <a href="{% url 'edit-student' student.id %}"
+                        ><i class="fa-regular fa-pen-to-square"></i
+                    ></a>
                 </td>
             </tr>
             {% endfor %}

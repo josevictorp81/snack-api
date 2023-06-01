@@ -4,40 +4,87 @@
 {% endblock %} {%block content %}
 
 <div class="form">
+    {% if student_edit %}
+    <form action="{% url 'edit-student' student_edit.id %}" method="POST">
+    {% else %}
     <form action="{% url 'create-student' %}" method="POST">
+    {% endif %}
         {% csrf_token %}
         <div class="title">
+            {% if student_edit %}
+            <h2>Atualizar Aluno</h2>
+            {% else %}
             <h2>Cadastrar Aluno</h2>
+            {% endif %}
         </div>
         <div class="form-fields">
-            <label for="name" class="label-input">Nome</label>
-            <input
-                type="text"
-                id="name"
-                name="name"
-                class="input-name"
-                placeholder="Ex: Maria..."
-                required
-            />
+            {% if student_edit %}
 
-            <label for="child" class="label-input">Turma</label>
-            <select name="class" id="class" class="input-select" required>
-                <option value="">Escolha a turma</option>
-                {% for class in classes %}
-                <option value="{{ class.id }}">{{ class.name }}</option>
-                {% endfor %}
-            </select>
+                <label for="name" class="label-input">Nome</label>
+                <input
+                    type="text"
+                    id="name"
+                    name="name"
+                    class="input-name"
+                    placeholder="Ex: Maria..."
+                    value="{{ student_edit.name }}"
+                    required
+                />
 
-            <label for="child" class="label-input">Pai</label>
-            <select name="father" id="father" class="input-select" required>
-                <option value="">Escolha o pai...</option>
-                {% for father in fathers %}
-                <option value="{{ father.id }}">{{ father.username }}</option>
-                {% endfor %}
-            </select>
+                <label for="child" class="label-input">Turma</label>
+                <select name="class" id="class" class="input-select" required>
+                    <option value="">Escolha a turma</option>
+                    <option selected value="{{ student_edit.class_id.id }}">{{ student_edit.class_id }}</option>
+                    {% for class in classes %}
+                    <option value="{{ class.id }}">{{ class.name }}</option>
+                    {% endfor %}
+                </select>
+
+                <label for="child" class="label-input">Pai</label>
+                <select name="father" id="father" class="input-select" required>
+                    <option value="">Escolha o pai...</option>
+                    <option selected value="{{ student_edit.father.id }}">{{ student_edit.father }}</option>
+                    {% for father in fathers %}
+                    <option value="{{ father.id }}">{{ father.username }}</option>
+                    {% endfor %}
+                </select>
+
+            {% else %}
+
+                <label for="name" class="label-input">Nome</label>
+                <input
+                    type="text"
+                    id="name"
+                    name="name"
+                    class="input-name"
+                    placeholder="Ex: Maria..."
+                    required
+                />
+
+                <label for="child" class="label-input">Turma</label>
+                <select name="class" id="class" class="input-select" required>
+                    <option value="">Escolha a turma</option>
+                    {% for class in classes %}
+                    <option value="{{ class.id }}">{{ class.name }}</option>
+                    {% endfor %}
+                </select>
+
+                <label for="child" class="label-input">Pai</label>
+                <select name="father" id="father" class="input-select" required>
+                    <option value="">Escolha o pai...</option>
+                    {% for father in fathers %}
+                    <option value="{{ father.id }}">{{ father.username }}</option>
+                    {% endfor %}
+                </select>
+
+            {% endif %}
         </div>
         <div class="form-fields">
+            {% if student_edit %}
+            <button type="submit">Atualizar</button>
+            {% else %}
             <button type="submit">Cadastrar</button>
+            {% endif %}
         </div>
     </form>
 </div>
