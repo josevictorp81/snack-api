@@ -1,7 +1,7 @@
 from typing import Any
 from django.http import HttpRequest, HttpResponse
 from django.shortcuts import redirect, render
-from django.views.generic import ListView, CreateView, UpdateView
+from django.views.generic import ListView, CreateView, UpdateView, DeleteView
 from django.contrib import messages
 from django.urls import reverse
 # from braces.views import SuperuserRequiredMixin
@@ -92,3 +92,13 @@ class StudentUpdateView(UpdateView):
             messages.add_message(request, messages.ERROR,
                                  'Erro interno do sistema!')
             return redirect(reverse('edit-student', args=[student_edit.id]))
+
+
+class StudentDeleteView(DeleteView):
+    model = Child
+    success_url = '/controller/students'
+
+    def delete(self, request: HttpRequest, *args: str, **kwargs: Any) -> HttpResponse:
+        messages.add_message(request, messages.SUCCESS,
+                             'Aluno deletado com sucesso!')
+        return super().delete(request, *args, **kwargs)
