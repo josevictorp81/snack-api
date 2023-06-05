@@ -1,0 +1,57 @@
+{% extends 'base.html' %} {% load static %}{% block css %}
+<link rel="stylesheet" href="{% static 'css/form_order.css' %}" />
+<link rel="stylesheet" href="{% static 'css/delete_modal.css' %}" />
+{% endblock %} {% block content %}
+
+<div class="form">
+    <form action="{% url 'create-order' %}" method="POST">
+        {% csrf_token %}
+        <div class="title">
+            <h2>Cadastrar Pedido</h2>
+        </div>
+        <div class="form-fields">
+            <label for="child" class="label-input">Aluno</label>
+            <select name="child" id="child" class="input-child" required>
+                <option value="">Escolha</option>
+                {% for student in students %}
+                <option value="{{ student.id }}">{{ student.name }}</option>
+                {% endfor %}
+            </select>
+
+            <label for="date" class="label-input">Data</label>
+            <input
+                type="date"
+                id="date"
+                name="date"
+                class="input-date"
+                required
+            />
+
+            <label for="class" class="label-input">Lanches</label>
+            <select
+                name="snack"
+                id="snack"
+                class="input-snack"
+                multiple
+                required
+            >
+                {% for snack in snacks %}
+                <option value="{{ snack.id }}">{{ snack.name }}</option>
+                {% endfor %}
+            </select>
+        </div>
+        <div class="form-fields">
+            <button type="submit">Cadastrar</button>
+        </div>
+    </form>
+</div>
+
+{% if messages %}
+<div class="messages">
+    {% for message in messages %}
+    <span {% if message.tags %} class="{{ message.tags }}" {% endif %}>
+        {{ message }}
+    </span>
+    {% endfor %}
+</div>
+{% endif %} {% endblock %}
