@@ -8,9 +8,9 @@ from django.urls import reverse
 
 from child.utils import generate_code
 from core.models import Child
-from web.utils.get_classes import get_classes, search_classes
-from web.utils.get_fathers import get_fathers, search_father
-from web.utils.students import ValidateStudents
+from web.utils.helpers.get_classes import get_classes, search_classes
+from web.utils.helpers.get_fathers import get_fathers, search_father
+from web.utils.validations.students import ValidateStudents
 
 
 class StudentListView(ListView):

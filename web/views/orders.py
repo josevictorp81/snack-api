@@ -8,9 +8,9 @@ from django.contrib import messages
 # from braces.views import SuperuserRequiredMixin
 
 from core.models import Order
-from web.utils.get_students import get_students, search_student
-from web.utils.get_snacks import get_snacks, search_snack
-from web.utils.orders import ValidateOrders, str_to_date
+from web.utils.helpers.get_students import get_students, search_student
+from web.utils.helpers.get_snacks import get_snacks, search_snack
+from web.utils.validations.orders import ValidateOrders, str_to_date
 
 
 class OrderListView(ListView):

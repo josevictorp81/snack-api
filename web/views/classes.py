@@ -8,7 +8,7 @@ from django.urls import reverse
 # from braces.views import SuperuserRequiredMixin
 
 from core.models import Classes
-from web.utils.classes import ValidateClasses
+from web.utils.validations.classes import ValidateClasses
 
 
 class ClassListView(ListView):

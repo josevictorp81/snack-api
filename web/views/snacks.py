@@ -7,7 +7,7 @@ from django.urls import reverse
 # from braces.views import SuperuserRequiredMixin
 
 from core.models import Snack
-from web.utils.snacks import ValidateSnacks
+from web.utils.validations.snacks import ValidateSnacks
 
 
 class SnackListView(ListView):
