@@ -43,10 +43,12 @@
                     {% endfor %}
                 </td>
                 <td>R$ {{ order.order_value }}</td>
-                <td>{{ order.date|date:'d-m-y' }}</td>
+                <td>{{ order.date|date:'d-m-Y' }}</td>
                 <td>{{ order.child_id.father }}</td>
                 <td>
-                    <a href="#"><i class="fa-regular fa-pen-to-square"></i></a>
+                    <a href="{% url 'edit-order' order.id %}"
+                        ><i class="fa-regular fa-pen-to-square"></i
+                    ></a>
                 </td>
             </tr>
             {% endfor %}

@@ -1,7 +1,9 @@
 from typing import Any
+from django.db.models.query import QuerySet
 from django.http import HttpRequest, HttpResponse
 from django.shortcuts import redirect, render
-from django.views.generic import ListView, CreateView
+from django.urls import reverse
+from django.views.generic import ListView, CreateView, UpdateView
 from django.contrib import messages
 # from braces.views import SuperuserRequiredMixin
 
@@ -16,6 +18,9 @@ class OrderListView(ListView):
     context_object_name = 'order_list'
     template_name = 'order_list.html'
     paginate_by = 15
+
+    def get_queryset(self) -> QuerySet[Any]:
+        return self.model.objects.all().order_by('-created_at')
 
 
 class OrderCreateView(CreateView):
@@ -54,9 +59,55 @@ class OrderCreateView(CreateView):
             order_value = 0
             messages.add_message(request, messages.SUCCESS,
                                  'Pedido cadastrado com sucesso!')
-            return redirect('order-list-view')
+            return redirect('order-list')
 
         except:
             messages.add_message(request, messages.ERROR,
                                  'Erro interno do sistema!')
             return redirect('create-order')
+
+
+class OrderUpdateView(UpdateView):
+    model = Order
+    template_name = 'order_form.html'
+
+    def get(self, request: HttpRequest, *args: str, **kwargs: Any) -> HttpResponse:
+        order_edit = Order.objects.get(id=kwargs['pk'])
+        context = {
+            'students': get_students(),
+            'snacks': get_snacks(),
+            'order_edit': order_edit
+        }
+        return render(request, self.template_name, context)
+
+    def post(self, request: HttpRequest, *args: str, **kwargs: Any) -> HttpResponse:
+        order_edit = Order.objects.get(id=kwargs['pk'])
+        student: str = request.POST['child']
+        date_str: str = request.POST['date']
+        snack: list = request.POST.getlist('snack')
+
+        order_date = str_to_date(date_str)
+
+        if ValidateOrders(request, student, order_date).validate():
+            return redirect(reverse('edit-order', args=[order_edit.id]))
+
+        try:
+            order_value: float = 0
+            order_edit.child_id = search_student(id=int(student))
+            for i in snack:
+                sn = search_snack(id=int(i))
+                order_value += sn.price
+                order_edit.snack_id.add(sn)
+
+            order_edit.order_value = order_value
+            order_edit.date = order_date
+            order_edit.save()
+            order_value = 0
+            messages.add_message(request, messages.SUCCESS,
+                                 'Pedido atualizado com sucesso!')
+            return redirect(reverse('edit-order', args=[order_edit.id]))
+
+        except:
+            messages.add_message(request, messages.ERROR,
+                                 'Erro interno do sistema!')
+            return redirect(reverse('edit-order', args=[order_edit.id]))

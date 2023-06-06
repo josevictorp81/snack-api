@@ -1,9 +1,9 @@
 {% extends 'base.html' %} {% load static %} {% block content %}
 <div class="nav">
     <h2>Alunos</h2>
-    <button class="btn-new">
-        <a href="{% url 'create-student' %}">Novo Aluno</a>
-    </button>
+    <a href="{% url 'create-student' %}"
+        ><button class="btn-new">Novo Aluno</button></a
+    >
 </div>
 
 {% if messages %}
