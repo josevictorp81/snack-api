@@ -10,8 +10,8 @@
 <div class="form">
     {% if order_edit %}
     <form action="{% url 'edit-order' order_edit.id %}" method="POST">
-        {% else %}
-        <form action="{% url 'create-order' %}" method="POST">
+    {% else %}
+    <form action="{% url 'create-order' %}" method="POST">
     {% endif %}
         {% csrf_token %}
         <div class="title">
@@ -37,8 +37,9 @@
                 <option value="{{ student.id }}">{{ student.name }}</option>
                 {% endif %} {% endfor %}
             </select>
+
             <label for="date" class="label-input"
-                >Data - {{ order_edit.date|date:'d/m/Y' }}</label
+                >Data do Pedido - {{ order_edit.date|date:'d/m/Y' }}</label
             >
             <input
                 type="date"
@@ -69,7 +70,7 @@
                 <!--  -->
                 {% endfor %}
             </select>
-            <!-- end edite order -->
+            <!--  -->
             {% else %}
             <!-- create new order -->
             <label for="child" class="label-input">Aluno</label>
@@ -80,7 +81,7 @@
                 {% endfor %}
             </select>
 
-            <label for="date" class="label-input">Data</label>
+            <label for="date" class="label-input">Data do Pedido</label>
             <input
                 type="date"
                 id="date"
@@ -101,7 +102,7 @@
                 <option value="{{ snack.id }}">{{ snack.name }}</option>
                 {% endfor %}
             </select>
-            <!-- end create new order -->
+            <!-- -->
             {% endif %}
         </div>
         <div class="form-fields">
@@ -124,6 +125,67 @@
     {% endfor %}
 </div>
 {% endif %}
-<!-- end messages -->
+<!-- -->
 
+<!-- delete modal -->
+{% if order_edit %}
+<div class="modal">
+    <button
+        type="button"
+        class="modal-delete__button"
+        onclick="deleteModal('open')"
+    >
+        Deletar Pedido
+    </button>
+
+    <div class="box">
+        <div class="modal-box">
+            <h2 class="modal-title">Deletar Pedido</h2>
+            <div class="modal-content">
+                <span class="modal-content__item">
+                    <strong>Aluno:</strong>
+                    {{ order_edit.child_id.name }}
+                </span>
+                <span class="modal-content__item">
+                    <strong>Série:</strong>
+                    {{ order_edit.child_id.class_id }}
+                </span>
+                <span class="modal-content__item">
+                    <strong>Preço:</strong>
+                    R$ {{ order_edit.order_value }}
+                </span>
+                <span class="modal-content__item">
+                    <strong>Preço:</strong>
+                    {{ order_edit.date|date:'d-m-Y' }}
+                </span>
+                <span class="modal-content__item">
+                    Você tem certeza que deseja deletar este pedido?
+                </span>
+                <div>
+                    <form
+                        action="{% url 'delete-order' order_edit.id %}"
+                        method="POST"
+                    >
+                        {% csrf_token %}
+                        <button
+                            class="modal-btn modal-btn__confirm"
+                            type="submit"
+                        >
+                            Sim
+                        </button>
+                        <button
+                            type="button"
+                            onclick="deleteModal('close')"
+                            class="modal-btn modal-btn__cancel"
+                        >
+                            Não
+                        </button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endif %} 
+<!--  -->
 {% endblock %}

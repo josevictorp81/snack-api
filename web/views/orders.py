@@ -3,7 +3,7 @@ from django.db.models.query import QuerySet
 from django.http import HttpRequest, HttpResponse
 from django.shortcuts import redirect, render
 from django.urls import reverse
-from django.views.generic import ListView, CreateView, UpdateView
+from django.views.generic import ListView, CreateView, UpdateView, DeleteView
 from django.contrib import messages
 # from braces.views import SuperuserRequiredMixin
 
@@ -111,3 +111,13 @@ class OrderUpdateView(UpdateView):
             messages.add_message(request, messages.ERROR,
                                  'Erro interno do sistema!')
             return redirect(reverse('edit-order', args=[order_edit.id]))
+
+
+class OrderDeleteView(DeleteView):
+    model = Order
+    success_url = '/controller/orders'
+
+    def delete(self, request: HttpRequest, *args: str, **kwargs: Any) -> HttpResponse:
+        messages.add_message(request, messages.SUCCESS,
+                             'Pedido excluído com sucesso!')
+        return super().delete(request, *args, **kwargs)
