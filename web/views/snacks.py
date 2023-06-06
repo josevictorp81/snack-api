@@ -43,7 +43,7 @@ class SnackCreateView(CreateView):
                 name=name.title(), price=price, available=available)
             messages.add_message(request, messages.SUCCESS,
                                  'Lanche cadastrado com sucesso!')
-            return redirect('snack-list-view')
+            return redirect('snack-list')
         except:
             messages.add_message(request, messages.ERROR,
                                  'Erro interno do sistema!')

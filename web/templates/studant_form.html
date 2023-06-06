@@ -1,8 +1,11 @@
-{% extends 'base.html' %} {% load static %}{% block css %}
+{% extends 'base.html' %} {% load static %}
+<!--  -->
+{% block css %}
 <link rel="stylesheet" href="{% static 'css/form_studant.css' %}" />
 <link rel="stylesheet" href="{% static 'css/delete_modal.css' %}" />
-{% endblock %} {%block content %}
-
+{% endblock %} 
+<!--  -->
+{%block content %}
 <div class="form">
     {% if student_edit %}
     <form action="{% url 'edit-student' student_edit.id %}" method="POST">
@@ -19,7 +22,7 @@
         </div>
         <div class="form-fields">
             {% if student_edit %}
-
+                <!-- edit student -->
                 <label for="name" class="label-input">Nome</label>
                 <input
                     type="text"
@@ -34,23 +37,33 @@
                 <label for="child" class="label-input">Turma</label>
                 <select name="class" id="class" class="input-select" required>
                     <option value="">Escolha a turma</option>
-                    <option selected value="{{ student_edit.class_id.id }}">{{ student_edit.class_id }}</option>
                     {% for class in classes %}
+                    <!--  -->
+                    {% if class.id == student_edit.class_id.id %}
+                    <option value="{{ class.id }}" selected>{{ class.name }}</option>
+                    {% else %}
                     <option value="{{ class.id }}">{{ class.name }}</option>
+                    {% endif %}
+                    <!--  -->
                     {% endfor %}
                 </select>
 
                 <label for="child" class="label-input">Pai</label>
                 <select name="father" id="father" class="input-select" required>
                     <option value="">Escolha o pai...</option>
-                    <option selected value="{{ student_edit.father.id }}">{{ student_edit.father }}</option>
                     {% for father in fathers %}
+                    <!--  -->
+                    {% if father.id == student_edit.father.id %}
+                    <option value="{{ father.id }}" selected>{{ father.username }}</option>
+                    {% else %}
                     <option value="{{ father.id }}">{{ father.username }}</option>
+                    {% endif %}
+                    <!--  -->
                     {% endfor %}
                 </select>
 
             {% else %}
-
+                <!-- create new student -->
                 <label for="name" class="label-input">Nome</label>
                 <input
                     type="text"
@@ -89,6 +102,7 @@
     </form>
 </div>
 
+<!-- messages -->
 {% if messages %}
 <div class="messages">
     {% for message in messages %}
@@ -99,6 +113,7 @@
 </div>
 {% endif %}
 
+<!-- delete modal -->
 {% if student_edit %}
 <div class="modal">
     <button
@@ -154,4 +169,5 @@
     </div>
 </div>
 {% endif %} 
+<!--  -->
 {% endblock %}

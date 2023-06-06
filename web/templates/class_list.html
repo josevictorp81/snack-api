@@ -1,12 +1,13 @@
-{% extends 'base.html' %} {% load static %} {% block content %}
-
+{% extends 'base.html' %} {% load static %}
+<!--  -->
+{% block content %}
 <div class="nav">
     <h2>Turmas</h2>
     <a href="{% url 'create-class' %}">
         <button class="btn-new">Nova Turma</button>
     </a>
 </div>
-
+<!-- messages -->
 {% if messages %}
 <div class="messages">
     {% for message in messages %}

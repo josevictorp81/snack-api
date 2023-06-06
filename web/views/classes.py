@@ -38,7 +38,7 @@ class ClassCreateView(CreateView):
             self.model.objects.create(name=class_name.title())
             messages.add_message(request, messages.SUCCESS,
                                  'Turma cadastrada com sucesso!')
-            return redirect('class-list-view')
+            return redirect('class-list')
         except:
             messages.add_message(request, messages.ERROR,
                                  'Erro interno do sistema!')

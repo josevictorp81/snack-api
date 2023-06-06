@@ -1,4 +1,6 @@
-{% extends 'base.html' %} {% load static %} {% block content %}
+{% extends 'base.html' %} {% load static %}
+<!--  -->
+{% block content %}
 <div class="nav">
     <h2>Alunos</h2>
     <a href="{% url 'create-student' %}"
@@ -6,6 +8,7 @@
     >
 </div>
 
+<!-- messages -->
 {% if messages %}
 <div class="messages">
     {% for message in messages %}

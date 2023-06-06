@@ -48,7 +48,7 @@ class StudentCreateView(CreateView):
                 name=name, father=search_father(father), class_id=search_classes(class_id), code=code)
             messages.add_message(request, messages.SUCCESS,
                                  'Aluno cadastrado com sucesso!')
-            return redirect('student-list-view')
+            return redirect('student-list')
         except:
             messages.add_message(request, messages.ERROR,
                                  'Erro interno do sistema!')

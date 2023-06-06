@@ -6,7 +6,6 @@
 {% endblock %}
 <!--  -->
 {% block content %}
-
 <div class="form">
     {% if order_edit %}
     <form action="{% url 'edit-order' order_edit.id %}" method="POST">
@@ -22,87 +21,85 @@
             {% endif %}
         </div>
         <div class="form-fields">
-            <!-- edit order -->
             {% if order_edit %}
-            <label for="child" class="label-input">Aluno</label>
-            <select name="child" id="child" class="input-child" required>
-                <option value="">Escolha</option>
-                {% for student in students %}
-                <!--  -->
-                {% if student.id == order_edit.child_id.id %}
-                <option value="{{ student.id }}" selected>
-                    {{ student.name }}
-                </option>
-                {% else %}
-                <option value="{{ student.id }}">{{ student.name }}</option>
-                {% endif %} {% endfor %}
-            </select>
+                <!-- edit order -->
+                <label for="child" class="label-input">Aluno</label>
+                <select name="child" id="child" class="input-child" required>
+                    <option value="">Escolha</option>
+                    {% for student in students %}
+                    <!--  -->
+                    {% if student.id == order_edit.child_id.id %}
+                    <option value="{{ student.id }}" selected>
+                        {{ student.name }}
+                    </option>
+                    {% else %}
+                    <option value="{{ student.id }}">{{ student.name }}</option>
+                    {% endif %} {% endfor %}
+                </select>
 
-            <label for="date" class="label-input"
-                >Data do Pedido - {{ order_edit.date|date:'d/m/Y' }}</label
-            >
-            <input
-                type="date"
-                id="date"
-                name="date"
-                class="input-date"
-                value=""
-                required
-            />
+                <label for="date" class="label-input"
+                    >Data do Pedido - {{ order_edit.date|date:'d/m/Y' }}</label
+                >
+                <input
+                    type="date"
+                    id="date"
+                    name="date"
+                    class="input-date"
+                    value=""
+                    required
+                />
 
-            <label for="class" class="label-input">Lanches</label>
-            <select
-                name="snack"
-                id="snack"
-                class="input-snack"
-                multiple
-                required
-            >
-                {% for snack in snacks %}
-                <!--  -->
-                {% if snack in order_edit.snack_id.all %}
-                <option value="{{ snack.id }}" selected>
-                    {{ snack.name }}
-                </option>
-                {% else %}
-                <option value="{{ snack.id }}">{{ snack.name }}</option>
-                {% endif %}
-                <!--  -->
-                {% endfor %}
-            </select>
-            <!--  -->
+                <label for="class" class="label-input">Lanches</label>
+                <select
+                    name="snack"
+                    id="snack"
+                    class="input-snack"
+                    multiple
+                    required
+                >
+                    {% for snack in snacks %}
+                    <!--  -->
+                    {% if snack in order_edit.snack_id.all %}
+                    <option value="{{ snack.id }}" selected>
+                        {{ snack.name }}
+                    </option>
+                    {% else %}
+                    <option value="{{ snack.id }}">{{ snack.name }}</option>
+                    {% endif %}
+                    <!--  -->
+                    {% endfor %}
+                </select>
             {% else %}
-            <!-- create new order -->
-            <label for="child" class="label-input">Aluno</label>
-            <select name="child" id="child" class="input-child" required>
-                <option value="">Escolha</option>
-                {% for student in students %}
-                <option value="{{ student.id }}">{{ student.name }}</option>
-                {% endfor %}
-            </select>
+                <!-- create order -->
+                <label for="child" class="label-input">Aluno</label>
+                <select name="child" id="child" class="input-child" required>
+                    <option value="">Escolha</option>
+                    {% for student in students %}
+                    <option value="{{ student.id }}">{{ student.name }}</option>
+                    {% endfor %}
+                </select>
 
-            <label for="date" class="label-input">Data do Pedido</label>
-            <input
-                type="date"
-                id="date"
-                name="date"
-                class="input-date"
-                required
-            />
+                <label for="date" class="label-input">Data do Pedido</label>
+                <input
+                    type="date"
+                    id="date"
+                    name="date"
+                    class="input-date"
+                    required
+                />
 
-            <label for="class" class="label-input">Lanches</label>
-            <select
-                name="snack"
-                id="snack"
-                class="input-snack"
-                multiple
-                required
-            >
-                {% for snack in snacks %}
-                <option value="{{ snack.id }}">{{ snack.name }}</option>
-                {% endfor %}
-            </select>
-            <!-- -->
+                <label for="class" class="label-input">Lanches</label>
+                <select
+                    name="snack"
+                    id="snack"
+                    class="input-snack"
+                    multiple
+                    required
+                >
+                    {% for snack in snacks %}
+                    <option value="{{ snack.id }}">{{ snack.name }}</option>
+                    {% endfor %}
+                </select>
             {% endif %}
         </div>
         <div class="form-fields">
@@ -125,7 +122,6 @@
     {% endfor %}
 </div>
 {% endif %}
-<!-- -->
 
 <!-- delete modal -->
 {% if order_edit %}
