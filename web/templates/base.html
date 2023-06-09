@@ -21,6 +21,7 @@
         <div class="container" onmousemove="closeMessagesAuto()">
             <div class="sidebar">
                 <header>SNACK</header>
+                {% if user.is_authenticated %}
                 <ul>
                     <li>
                         <a href="{% url 'order-list' %}"
@@ -43,12 +44,13 @@
                         >
                     </li>
                     <li>
-                        <a href="#"
+                        <a href="{% url 'logout' %}"
                             ><i class="fa-solid fa-arrow-right-from-bracket"></i
                             >Sair</a
                         >
                     </li>
                 </ul>
+                {% endif %}
             </div>
             <!-- <hr /> -->
             <div class="content">{% block content %} {% endblock%}</div>

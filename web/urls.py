@@ -5,6 +5,7 @@ from .views import classes, orders, students, snacks, authentication
 urlpatterns = [
     # authentication
     path('login', authentication.AuthLoginView.as_view(), name='login'),
+    path('logout', authentication.AuthLogoutView.as_view(), name='logout'),
 
     # orders
     path('orders', orders.OrderListView.as_view(), name='order-list'),

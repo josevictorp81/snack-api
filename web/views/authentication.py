@@ -1,9 +1,10 @@
 from typing import Any
-from django.contrib.auth.views import LoginView
+from django.contrib.auth.views import LoginView, LogoutView
 from django.contrib.auth import authenticate, login
 from django.http import HttpRequest, HttpResponse
 from django.shortcuts import redirect, render
 from django.contrib import messages
+from django.urls import reverse
 
 
 class AuthLoginView(LoginView):
@@ -31,3 +32,7 @@ class AuthLoginView(LoginView):
         else:
             login(request, user)
             return redirect('order-list')
+
+
+class AuthLogoutView(LogoutView):
+    next_page = 'login'
