@@ -4,7 +4,6 @@ from django.contrib.auth import authenticate, login
 from django.http import HttpRequest, HttpResponse
 from django.shortcuts import redirect, render
 from django.contrib import messages
-from django.urls import reverse
 
 
 class AuthLoginView(LoginView):

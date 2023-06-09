@@ -5,7 +5,7 @@ from django.shortcuts import redirect, render
 from django.urls import reverse
 from django.views.generic import ListView, CreateView, UpdateView, DeleteView
 from django.contrib import messages
-# from braces.views import SuperuserRequiredMixin
+from django.contrib.auth.mixins import LoginRequiredMixin
 
 from core.models import Order
 from web.utils.helpers.get_students import get_students, search_student
@@ -13,19 +13,21 @@ from web.utils.helpers.get_snacks import get_snacks, search_snack
 from web.utils.validations.orders import ValidateOrders, str_to_date
 
 
-class OrderListView(ListView):
+class OrderListView(LoginRequiredMixin, ListView):
     model = Order
     context_object_name = 'order_list'
     template_name = 'order_list.html'
     paginate_by = 15
+    login_url = 'login'
 
     def get_queryset(self) -> QuerySet[Any]:
         return self.model.objects.all().order_by('-created_at')
 
 
-class OrderCreateView(CreateView):
+class OrderCreateView(LoginRequiredMixin, CreateView):
     model = Order
     template_name = 'order_form.html'
+    login_url = 'login'
 
     def get(self, request: HttpRequest, *args: str, **kwargs: Any) -> HttpResponse:
         context = {
@@ -67,9 +69,10 @@ class OrderCreateView(CreateView):
             return redirect('create-order')
 
 
-class OrderUpdateView(UpdateView):
+class OrderUpdateView(LoginRequiredMixin, UpdateView):
     model = Order
     template_name = 'order_form.html'
+    login_url = 'login'
 
     def get(self, request: HttpRequest, *args: str, **kwargs: Any) -> HttpResponse:
         order_edit = Order.objects.get(id=kwargs['pk'])
@@ -113,9 +116,10 @@ class OrderUpdateView(UpdateView):
             return redirect(reverse('edit-order', args=[order_edit.id]))
 
 
-class OrderDeleteView(DeleteView):
+class OrderDeleteView(LoginRequiredMixin, DeleteView):
     model = Order
     success_url = '/controller/orders'
+    login_url = 'login'
 
     def delete(self, request: HttpRequest, *args: str, **kwargs: Any) -> HttpResponse:
         messages.add_message(request, messages.SUCCESS,

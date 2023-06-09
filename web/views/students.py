@@ -4,7 +4,7 @@ from django.shortcuts import redirect, render
 from django.views.generic import ListView, CreateView, UpdateView, DeleteView
 from django.contrib import messages
 from django.urls import reverse
-# from braces.views import SuperuserRequiredMixin
+from django.contrib.auth.mixins import LoginRequiredMixin
 
 from child.utils import generate_code
 from core.models import Child
@@ -13,16 +13,18 @@ from web.utils.helpers.get_fathers import get_fathers, search_father
 from web.utils.validations.students import ValidateStudents
 
 
-class StudentListView(ListView):
+class StudentListView(LoginRequiredMixin, ListView):
     template_name = 'student_list.html'
     context_object_name = 'student_list'
     model = Child
     paginate_by = 25
+    login_url = 'login'
 
 
-class StudentCreateView(CreateView):
+class StudentCreateView(LoginRequiredMixin, CreateView):
     model = Child
     template_name = 'studant_form.html'
+    login_url = 'login'
 
     def get(self, request: HttpRequest, *args: str, **kwargs: Any) -> HttpResponse:
         fathers = get_fathers()
@@ -55,9 +57,10 @@ class StudentCreateView(CreateView):
             return redirect('create-student')
 
 
-class StudentUpdateView(UpdateView):
+class StudentUpdateView(LoginRequiredMixin, UpdateView):
     model = Child
     template_name = 'studant_form.html'
+    login_url = 'login'
 
     def get(self, request: HttpRequest, *args: str, **kwargs: Any) -> HttpResponse:
         student_edit: Child = Child.objects.get(id=kwargs['pk'])
@@ -94,9 +97,10 @@ class StudentUpdateView(UpdateView):
             return redirect(reverse('edit-student', args=[student_edit.id]))
 
 
-class StudentDeleteView(DeleteView):
+class StudentDeleteView(LoginRequiredMixin, DeleteView):
     model = Child
     success_url = '/controller/students'
+    login_url = 'login'
 
     def delete(self, request: HttpRequest, *args: str, **kwargs: Any) -> HttpResponse:
         messages.add_message(request, messages.SUCCESS,

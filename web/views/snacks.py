@@ -4,22 +4,24 @@ from django.shortcuts import render, redirect
 from django.views.generic import ListView, CreateView, UpdateView, DeleteView
 from django.contrib import messages
 from django.urls import reverse
-# from braces.views import SuperuserRequiredMixin
+from django.contrib.auth.mixins import LoginRequiredMixin
 
 from core.models import Snack
 from web.utils.validations.snacks import ValidateSnacks
 
 
-class SnackListView(ListView):
+class SnackListView(LoginRequiredMixin, ListView):
     context_object_name = 'snack_list'
     template_name = 'snack_list.html'
     model = Snack
     paginate_by = 25
+    login_url = 'login'
 
 
-class SnackCreateView(CreateView):
+class SnackCreateView(LoginRequiredMixin, CreateView):
     model = Snack
     template_name = 'snack_form.html'
+    login_url = 'login'
 
     def get(self, request: HttpRequest, *args: str, **kwargs: Any) -> HttpResponse:
         return render(request, self.template_name)
@@ -50,9 +52,10 @@ class SnackCreateView(CreateView):
             return redirect('create-snack')
 
 
-class SnackUpdateView(UpdateView):
+class SnackUpdateView(LoginRequiredMixin, UpdateView):
     model = Snack
     template_name = 'snack_form.html'
+    login_url = 'login'
 
     def get(self, request: HttpRequest, *args: str, **kwargs: Any) -> HttpResponse:
         snack_edit: Snack = self.model.objects.get(id=kwargs['pk'])
@@ -89,9 +92,10 @@ class SnackUpdateView(UpdateView):
             return redirect('edit-snack')
 
 
-class SnackDeleteView(DeleteView):
+class SnackDeleteView(LoginRequiredMixin, DeleteView):
     model = Snack
     success_url = '/controller/snacks'
+    login_url = 'login'
 
     def delete(self, request: HttpRequest, *args: str, **kwargs: Any) -> HttpResponse:
         messages.add_message(request, messages.SUCCESS,

@@ -5,25 +5,27 @@ from django.shortcuts import redirect, render
 from django.views.generic import ListView, CreateView, UpdateView, DeleteView
 from django.contrib import messages
 from django.urls import reverse
-# from braces.views import SuperuserRequiredMixin
+from django.contrib.auth.mixins import LoginRequiredMixin
 
 from core.models import Classes
 from web.utils.validations.classes import ValidateClasses
 
 
-class ClassListView(ListView):
+class ClassListView(LoginRequiredMixin, ListView):
     context_object_name = 'class_list'
     model = Classes
     template_name = 'class_list.html'
     paginate_by = 25
+    login_url = 'login'
 
     def get_queryset(self) -> QuerySet[Any]:
         return self.model.objects.all()
 
 
-class ClassCreateView(CreateView):
+class ClassCreateView(LoginRequiredMixin, CreateView):
     template_name = 'class_form.html'
     model = Classes
+    login_url = 'login'
 
     def get(self, request: HttpRequest, *args: str, **kwargs: Any) -> HttpResponse:
         return render(request, self.template_name)
@@ -45,9 +47,10 @@ class ClassCreateView(CreateView):
             return redirect('create-class')
 
 
-class ClassUpdateView(UpdateView):
+class ClassUpdateView(LoginRequiredMixin, UpdateView):
     model = Classes
     template_name = 'class_form.html'
+    login_url = 'login'
 
     def get(self, request: HttpRequest, *args: str, **kwargs: Any) -> HttpResponse:
         class_edit: Classes = self.model.objects.get(id=kwargs['pk'])
@@ -72,9 +75,10 @@ class ClassUpdateView(UpdateView):
             return redirect(reverse('edit-class', args=[class_edit.id]))
 
 
-class ClassDeleteView(DeleteView):
+class ClassDeleteView(LoginRequiredMixin, DeleteView):
     model = Classes
     success_url = '/controller/classes'
+    login_url = 'login'
 
     def delete(self, request: HttpRequest, *args: str, **kwargs: Any) -> HttpResponse:
         messages.add_message(request, messages.SUCCESS,
