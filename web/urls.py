@@ -1,8 +1,11 @@
 from django.urls import path
 
-from .views import classes, orders, students, snacks
+from .views import classes, orders, students, snacks, authentication
 
 urlpatterns = [
+    # authentication
+    path('login', authentication.AuthLoginView.as_view(), name='login'),
+
     # orders
     path('orders', orders.OrderListView.as_view(), name='order-list'),
     path('orders/create', orders.OrderCreateView.as_view(), name='create-order'),

@@ -1,0 +1,50 @@
+{% extends 'base.html' %} {% load static %}
+<!--  -->
+{% block css %}
+<link rel="stylesheet" href="{% static 'css/form.css' %}" />
+{% endblock %} {% block content %}
+<div class="form">
+    <form action="{% url 'login' %}" method="POST">
+        {% csrf_token %}
+        <div class="img-profile">
+            <img class="img" src="{% static 'img/user3.jpg' %}" alt="Profile" />
+        </div>
+
+        <div class="form-fields">
+            <label for="username" class="label-input">Username</label>
+            <input
+                type="text"
+                id="username"
+                name="username"
+                class="input-name"
+                required
+            />
+
+            <label for="password" class="label-input">Senha</label>
+            <input
+                type="password"
+                id="password"
+                name="password"
+                class="input-name"
+                required
+            />
+        </div>
+
+        <div class="form-fields">
+            <button class="btn-submit" type="submit">Entrar</button>
+        </div>
+    </form>
+</div>
+
+<!-- messages -->
+{% if messages %}
+<div class="messages">
+    {% for message in messages %}
+    <span {% if message.tags %} class="{{ message.tags }}" {% endif %}>
+        {{ message }}
+    </span>
+    {% endfor %}
+</div>
+{% endif %}
+<!--  -->
+{% endblock %}
