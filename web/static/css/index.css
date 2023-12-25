@@ -28,17 +28,21 @@
 .sidebar {
     width: 20%;
     height: 100%;
-    /* background-color: rgb(27, 27, 80); 042340 */
 }
 
-.sidebar header {
+.sidebar .header {
     font-size: 28px;
     color: var(--wihte-color);
     text-align: center;
     background-color: rgb(45, 45, 124); /*063046*/
-    line-height: 80px;
+    /* line-height: 80px; */
     width: 110%;
     user-select: none;
+}
+
+.header-username {
+    font-size: 1rem;
+    color: #fff;
 }
 
 .sidebar ul a {

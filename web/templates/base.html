@@ -20,8 +20,11 @@
     <body>
         <div class="container" onmousemove="closeMessagesAuto()">
             <div class="sidebar">
-                <header>SNACK</header>
                 {% if user.is_authenticated %}
+                <header class="header">
+                    <h2 class="header-title">SNACK</h2>
+                    <p class="header-username">{{ user.username }}</p>
+                </header>
                 <ul>
                     <li>
                         <a href="{% url 'order-list' %}"
@@ -50,6 +53,8 @@
                         >
                     </li>
                 </ul>
+                {% else %}
+                <header class="header">SNACK</header>
                 {% endif %}
             </div>
             <!-- <hr /> -->
